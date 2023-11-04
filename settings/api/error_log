@@ -1,0 +1,53 @@
+[31-Oct-2023 13:25:03 Asia/Kolkata] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'update_at' in 'field list' in /home2/dstechsi/public_html/eom/settings/api/workLogApi.php:624
+Stack trace:
+#0 /home2/dstechsi/public_html/eom/settings/api/workLogApi.php(624): PDOStatement->execute()
+#1 {main}
+  thrown in /home2/dstechsi/public_html/eom/settings/api/workLogApi.php on line 624
+[31-Oct-2023 13:25:07 Asia/Kolkata] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'update_at' in 'field list' in /home2/dstechsi/public_html/eom/settings/api/workLogApi.php:624
+Stack trace:
+#0 /home2/dstechsi/public_html/eom/settings/api/workLogApi.php(624): PDOStatement->execute()
+#1 {main}
+  thrown in /home2/dstechsi/public_html/eom/settings/api/workLogApi.php on line 624
+[31-Oct-2023 13:25:18 Asia/Kolkata] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'update_at' in 'field list' in /home2/dstechsi/public_html/eom/settings/api/workLogApi.php:624
+Stack trace:
+#0 /home2/dstechsi/public_html/eom/settings/api/workLogApi.php(624): PDOStatement->execute()
+#1 {main}
+  thrown in /home2/dstechsi/public_html/eom/settings/api/workLogApi.php on line 624
+[31-Oct-2023 13:25:30 Asia/Kolkata] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'update_at' in 'field list' in /home2/dstechsi/public_html/eom/settings/api/workLogApi.php:624
+Stack trace:
+#0 /home2/dstechsi/public_html/eom/settings/api/workLogApi.php(624): PDOStatement->execute()
+#1 {main}
+  thrown in /home2/dstechsi/public_html/eom/settings/api/workLogApi.php on line 624
+[31-Oct-2023 13:29:34 Asia/Kolkata] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home2/dstechsi/public_html/eom/settings/api/workLogApi.php:144
+Stack trace:
+#0 /home2/dstechsi/public_html/eom/settings/api/workLogApi.php(638): qcEfficiencyAdd()
+#1 {main}
+  thrown in /home2/dstechsi/public_html/eom/settings/api/workLogApi.php on line 144
+[31-Oct-2023 13:41:51 Asia/Kolkata] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home2/dstechsi/public_html/eom/settings/api/vectorTaskApi.php:149
+Stack trace:
+#0 {main}
+  thrown in /home2/dstechsi/public_html/eom/settings/api/vectorTaskApi.php on line 149
+[31-Oct-2023 13:41:54 Asia/Kolkata] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home2/dstechsi/public_html/eom/settings/api/vectorTaskApi.php:149
+Stack trace:
+#0 {main}
+  thrown in /home2/dstechsi/public_html/eom/settings/api/vectorTaskApi.php on line 149
+[31-Oct-2023 13:42:09 Asia/Kolkata] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home2/dstechsi/public_html/eom/settings/api/vectorTaskApi.php:149
+Stack trace:
+#0 {main}
+  thrown in /home2/dstechsi/public_html/eom/settings/api/vectorTaskApi.php on line 149
+[01-Nov-2023 14:13:16 Asia/Kolkata] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home2/dstechsi/public_html/eom/settings/api/vectorTaskApi.php:176
+Stack trace:
+#0 {main}
+  thrown in /home2/dstechsi/public_html/eom/settings/api/vectorTaskApi.php on line 176
+[01-Nov-2023 14:13:19 Asia/Kolkata] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home2/dstechsi/public_html/eom/settings/api/vectorTaskApi.php:176
+Stack trace:
+#0 {main}
+  thrown in /home2/dstechsi/public_html/eom/settings/api/vectorTaskApi.php on line 176
+[01-Nov-2023 14:13:41 Asia/Kolkata] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home2/dstechsi/public_html/eom/settings/api/vectorTaskApi.php:176
+Stack trace:
+#0 {main}
+  thrown in /home2/dstechsi/public_html/eom/settings/api/vectorTaskApi.php on line 176
+[01-Nov-2023 14:13:51 Asia/Kolkata] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home2/dstechsi/public_html/eom/settings/api/vectorTaskApi.php:176
+Stack trace:
+#0 {main}
+  thrown in /home2/dstechsi/public_html/eom/settings/api/vectorTaskApi.php on line 176

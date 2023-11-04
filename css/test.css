@@ -1,0 +1,471 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* ------ global variable */
+
+.no-margin {
+    margin: 0 !important;
+}
+
+/* -----end global varible-----*/
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+li{
+    list-style: none;
+}
+h1,h2,h3,h4{
+    font-weight: 500;
+}
+h1{
+    font-size: 41px;
+   
+    
+}
+h2{
+    font-size: 20px;
+}
+
+body {
+    background-color: #fbfbfb;
+}
+.left{
+    margin-left: 5px;
+}
+
+@media (min-width: 991.98px) {
+    main {
+        padding-left: 240px;
+    }
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding: 58px 0 0;
+    /* Height of navbar */
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+    width: 240px;
+    z-index: 600;
+}
+
+@media (max-width: 991.98px) {
+    /* .sidebar {
+        width: 100%;
+    } */
+}
+
+.sidebar .active {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    margin: 5px 0 !important;
+}
+
+.sidebar-sticky {
+    /* position: relative; */
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* Scrollable contents if viewport is shorter than content. */
+}
+.sec{
+    /* margin-left: 250px;
+    width: 80%; */
+
+    
+}
+.sec h1{
+    position: fixed;
+    top: 50px;
+    background-color: #FFD700;
+    padding: 0 10px;
+    
+}
+.sidebar1{
+position: absolute;
+  top: 0;
+    padding: 58px 0 0;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 1px 0 rgb(0 0 0 / 2%);
+    width: 402px;
+
+    z-index: 600;
+}
+.project_id{
+    margin-top: 50px;
+}
+.project_id ul{
+    background-color: #F5F5F5;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 10px;
+
+}
+.project_id p{
+    width: 370px;
+}
+.news{
+    
+    margin-left: 30px;
+}
+.news h1{
+    width: 545px;
+    text-align: center;
+
+}
+.news{
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+  /* width: 100%; */
+}
+.toast{
+    margin-top: 40px;
+   border: 1px solid black;
+   width:550px
+   
+}
+.news .bor{
+    border: solid black;
+}
+
+.right-nav input{
+    
+
+}
+.margin-5{
+    margin: 5px;
+}
+.margin-left-26{
+    margin-left: 26px;
+}
+
+.home{
+    width: 100%;
+    height: 100vh;
+    margin-top: 10px;
+}
+.home .logo img{
+width: 60px;
+height: auto;
+
+}
+.row{
+        --bs-gutter-x: 0rem;
+}
+.Descrption input{
+    background-color: #f0f8ff;
+}
+.indipended{
+    /* margin: 0px;
+    padding: 0px; */
+    display: block;
+    display: flex;
+    align-items: center;
+    
+    /* background-color: blue; */
+    color: #fff;
+    font-size: 12px;
+    border-radius: 5px;
+}
+.development-text{
+    font-weight: 900px;
+    
+    background-color: blue;
+    border-radius: 3px;
+}
+.right-buttom{
+   margin-left: 60px;
+}
+#vw{
+    font-size: 11px;
+}
+.imo{
+    background-color: #00a3bf;
+    border-radius: 8px;
+    /* color: yellow; */
+}
+.imo-r{
+    background-color: red;
+    border-radius: 8px;
+}
+#box1{
+    
+    display: block;
+    position: relative;
+    
+}
+.bg-btn{
+    background-color: rgb(232, 232, 232);
+}
+.right{
+    background-color: #F4F6F6;
+}
+.icon{
+    margin-left: -3px;
+}
+.Time-traking{
+    margin-top: 12px;
+}
+@media(max-width:1280){
+    .dates input{
+        margin-left: 10px;
+    }
+}
+@media(max-width:1366){
+    .dates input{
+        margin-left: 20px!important;
+    }
+}
+.dates input{
+    margin-left: 3px;
+}
+.sidebar a:hover{
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 8px;
+}
+.sidebar a:active{
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 8px;
+}
+.Agile{
+    margin-top: 6px;
+}
+
+
+/* ------------- from css ---------------*/
+
+.input-box {
+    margin: 20px 30px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input-box label {
+    width: 25%;
+}
+
+
+
+/* ------------- login css ---------------*/
+
+.Login_page img {
+    width: 100%;
+    height: 600px;
+}
+
+.Login_page {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+
+.Login_page h1 {
+    margin-top: 40px;
+    font-weight: 500;
+    font-size: 25px;
+}
+
+
+
+/*---------------register css------------*/
+
+
+.gradient-custom-3 {
+/* fallback for old browsers */
+background: #84fab0;
+
+/* Chrome 10-25, Safari 5.1-6 */
+background: -webkit-linear-gradient(to right, rgb(25 26 26 / 50%), rgb(0 0 0 / 40%));
+
+background: linear-gradient(to right, rgb(25 26 26 / 50%), rgb(0 0 0 / 40%))
+}
+.gradient-custom-4 {
+    background: #0dcaf0;
+    border: none;
+}
+
+
+/*-------------Leave css-------------*/
+/*-------------Leave css-------------*/
+
+.images {
+    width: 50px;
+    height: 50px;
+    border-radius: 20px;
+}
+
+.bordar-radious-10{
+    border-radius: 10px;
+}
+.images{
+    width: 50px;
+    height: 50px;border-radius: 20px;
+}
+.switch-button{
+    width: 400px;
+}
+
+.h-btn a:hover{
+    background-color: green;
+    color: white;
+}
+.h-btn{
+    width: 200px;
+}
+.Contact-input{
+    width: 200px;
+}
+.margin-left30{
+    margin-left: 30px;
+}
+/*------------dashboard css----------*/
+.News{
+    margin: 10px;
+    padding: 5px;
+    width: 80%;
+    border: 1px solid black;
+    background-color: white;
+   line-height: normal;
+}
+
+.box3{
+       margin-left: 10px;
+}
+.list{
+    border: 1px solid black;
+    background-color: #F5F5F5;
+}
+p{
+padding-bottom: 0px;
+margin-bottom: 0px;
+}
+
+.p-25{
+    padding: 25px;
+}
+
+.border {
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+
+
+
+
+.col-3 {
+    flex: 0 0 auto;
+    width: 25%;
+    padding: 0;
+}
+
+
+.color{
+   color: green;
+ font-weight: 500;
+   
+}
+
+.pending-box{
+justify-content: space-between;
+  width: 700px;
+ 
+}
+.accordion-button{
+    padding: 0px;
+}
+.accordion-item{
+    background-color: #fff;
+}
+
+.accordion-body {
+        
+padding: 0rem 0rem;
+    }
+
+.accordion-item{
+    border: 1px solid rgb(20, 20, 20)!important;
+    margin: 15px;
+    padding: 10px;
+    border-radius: 10px!important;
+}
+.details a{
+margin-top: 30px!important;
+}
+
+.accordion-button .row{
+    width: 100%;
+}
+
+div.datedropper {
+    --dd-color1: #3c87d2 !important;
+  }
+
+/* dashbaord css */
+.heading{
+    font-size: 22px;
+    font-weight: 600;
+    font-family: sans-serif;
+  }
+  .box{
+    box-shadow: 2px 2px 2px 2px;
+    
+    margin-bottom: 20px;
+    background-color: #fff;
+  }
+  .birthday-cake{
+    width: 35px;
+    height:35px;
+    border-radius: 50%;
+  }
+  .birthday img{
+    width: 50px;
+    border-radius: 50%;
+  }
+.UP-Leave{
+  background-color: #fe6464;
+  padding: 10px;
+}
+.issue-scroller{
+  height: 200px;
+  /* padding: 15px; */
+  overflow: auto;
+}
+.container{
+  background-color: #f4f5f9;
+}
+.company img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.shadow-box{
+  box-shadow: 3px 3px 2px 2px rgb(179, 177, 177);
+}
+table tbody td .close{
+  background-color: rgb(170, 248, 218);
+  display: block;
+  border-radius: 20px;
+  padding: 0px 8px;
+}
+
+
+
+
+/* try to improve ui */
+
+main{
+    height: -webkit-fill-available;
+    display: grid;
+    align-items: center;
+}

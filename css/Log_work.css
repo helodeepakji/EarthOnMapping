@@ -1,0 +1,101 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+    .card-registration .select-arrow {
+    top: 13px;
+    }
+.weidth-200px{
+    width: 200px;
+}
+.Time{
+    margin-left: 38px;
+}
+.date-type{
+    margin-left: 29px;
+}
+input{
+  /* width: 250px; */
+}
+.date {
+   
+    margin-left: 59px;
+    
+}
+.date input{
+  width: 265px;
+  background-color: #f0f8ff;
+}
+.work-spant{
+  margin-left: 5px;
+
+}
+.time-spant input{
+  width: 265px;
+  background-color: #f0f8ff;
+}
+.time{
+  margin-left: 55px;
+}
+.date input{
+  margin-bottom: 20px;
+  
+}
+.gj-datepicker-md [role=right-icon] {
+  position: absolute;
+  right: 9px;
+  top: 9px;
+  font-size: 24px;
+}
+
+.btn{
+    margin-bottom: 20px; 
+}
+.btn-size{
+    width: 100px;
+    height: 40px;
+}
+.btn-clase{
+    gap: 20px;
+    margin-right: 100px;
+}
+body {
+    background-color: #fbfbfb;
+  }
+  @media (min-width: 991.98px) {
+    main {
+      padding-left: 240px;
+    }
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding: 58px 0 0; /* Height of navbar */
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+    width: 240px;
+    z-index: 600;
+  }
+  
+  @media (max-width: 991.98px) {
+    /* .sidebar {
+      width: 100%;
+    } */
+  }
+  .sidebar .active {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  }
+  
+  .sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  }

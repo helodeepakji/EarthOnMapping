@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.css" integrity="sha512-0nkKORjFgcyxv3HbE4rzFUlENUMNqic/EzDIeYCgsKa/nwqr2B91Vu/tNAu4Q0cBuG4Xe/D1f/freEci/7GDRA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js" integrity="sha512-eSeh0V+8U3qoxFnK3KgBsM69hrMOGMBy3CNxq/T4BArsSQJfKVsKb5joMqIPrNMjRQSTl4xG8oJRpgU2o9I7HQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Home page</title>  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.1/dist/css/select2.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="datedropper-jquery.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+      .container
+      {
+    --bs-gutter-x: 0rem;
+  }
+      div.datedropper {
+    --dd-color1: #3c87d2;
+}
+.comment{
+  margin-top: 5px!important;
+  border-radius: 6px;
+/* padding: 6px; */
+background-color: #e5e5e5;
+border: none;
+}
+
+.border-radious-8{
+  border-radius: 8px;
+}
+.modal-date{
+  margin-left: 35px;
+  width: 235px; 
+}
+.edit-bg{
+  background-color: bisque;
+}
+#ch{
+  border-radius: 8px;
+
+  background-color: #e5e5e5;
+  border: none;
+}
+/* .time-spant{
+  padding: 5px;
+} */
+.boy-icon img{
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  background-color: aliceblue;
+}
+span{
+font-weight: 600;
+}
+.Assign-name{
+  width: 170px;
+  border: none;
+  padding: 5px;
+}
+
+.option{
+  border: none;
+  background-color: #F4F6F6;
+}
+.activity-name{
+  background-color: #0052cc;
+  color: white;
+  padding: 5px;
+  border-radius: 15px;
+  /* margin: 10px; */
+  letter-spacing: 1px;
+ margin: 30px 10px;
+ 
+  /* display: flex; */
+  
+}
+.Activity-short-name{
+  background-color: #0052cc;
+  color: white;
+  padding: 5px;
+  border-radius: 15px;
+  letter-spacing: 1px;
+ 
+}
+
+.scroll-bar{
+      max-height: 150px;
+      overflow-y: scroll;
+    }
+    </style>
+</head>
+<body>
+   
+   
+        <!--Main Navigation-->
+<header>
+    <!-- Sidebar -->
+    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white d-flex">
+       <div>
+      <div class="position-sticky">
+        <div class="list-group list-group-flush mx-3 mt-4">
+          <a href="index.html" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
+          </a>
+          <a href="../HTML/Log_work.html" class="list-group-item list-group-item-action py-2 ripple " >
+            <i class="fas fa-chart-area fa-fw me-3"></i><span>Log Work</span>
+          </a>
+          <!-- <a href="Login.html" class="list-group-item list-group-item-action py-2 ripple" ><i
+              class="fas fa-lock fa-fw me-3"></i><span>Login</span></a> -->
+          <a href="../HTML/Create-task.html" class="list-group-item list-group-item-action py-2 ripple" ><i
+              class="fas fa-chart-line fa-fw me-3"></i><span>Create Task</span></a>
+          <a href="../HTML/Create-project.html" class="list-group-item list-group-item-action py-2 ripple" >
+            <i class="fas fa-chart-pie fa-fw me-3"></i><span>Create project</span>
+          </a>
+          <a href="../HTML/Leave.html" class="list-group-item list-group-item-action py-2 ripple" ><i
+              class="fas fa-chart-bar fa-fw me-3"></i><span>Leave application</span></a>
+          <a href="../HTML/attandance.html" class="list-group-item list-group-item-action py-2 ripple"><i
+              class="fas fa-globe fa-fw me-3"></i><span>Attendance</span></a>
+          <a href="../HTML/project.html" class="list-group-item list-group-item-action py-2 ripple"><i
+              class="fas fa-building fa-fw me-3"></i><span>project</span></a>
+          <a href="../HTML/dahbord.html" class="list-group-item list-group-item-action py-2 ripple"><i
+              class="fas fa-calendar fa-fw me-3"></i><span>dashbord</span></a>
+          <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+              class="fas fa-users fa-fw me-3"></i><span>Users</span></a>
+          <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+              class="fas fa-money-bill fa-fw me-3"></i><span>Sales</span></a>
+        </div>
+      </div>
+     
+    </div>
+
+      
+    </nav>
+   
+    <!-- Sidebar -->
+  
+    <!-- Navbar -->
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu"
+          aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+  
+        <!-- Brand -->
+        <a class="navbar-brand" href="#">
+          <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="25" alt="MDB Logo"
+            loading="lazy" />
+        </a>
+        <ul class="navbar-nav ms-auto d-flex flex-row">
+
+          <!-- Avatar -->
+          <div class="dropdown float-end">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fab fa-github"></i>
+            </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="profile.html">My profile</a></li>
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="#">Logout</a></li>
+        </ul>
+        </ul>
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+  </header>
+  
+  
+ 
+  <!--Main Navigation-->
+  
+  <!--Main layout-->
+  <main style="margin-top: 58px;">
+    <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Log Work</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body p-0">
+          
+          <form>
+            <div class="row ms-5">
+              <div class="d-flex time mb-3">
+                <label for="Summary" class="  control-label ">Time Spant </label>
+                <div class="time-spant w-70 d-flex">
+                  <!-- <input type="text" id=""  class="form-control margin-left-26 " > -->
+                  <!-- <input type="text" id=""  class="form-control " > -->
+                 <div class="margin-left-26 border bordar-radious-10">
+                  <select id="ch" class="time-spant bg-white form-control">
+                    <option selected>Select Hour</option>
+                    <option>1H</option>
+                    <option>2H</option>
+                    <option>3H</option>
+                    <option>4H</option>
+                    
+                   </select>
+                 </div>
+                 <div class="border ms-2">
+                  <select id="ch" class="time-spant bg-white form-control">
+                    <option selected>Select Minute</option>
+                    <option>HM</option>
+                    <option>HM</option>
+                    <option>HM</option>
+                    <option>HM</option>
+                   </select>
+                 </div>
+                </div>
+               </div>
+            </div>
+            <div class="row ms-5">
+              <div class="d-flex time mb-3 ">
+                <label for="" class="  control-label ">Start Date </label>
+                <div class="time-spant">
+                  <input type="text" id="datepicker4"class="form-control modal-date  margin-left-26" >
+                </div>
+               </div>
+              
+             </div>
+             <div class="row ">
+              
+                <div class="d-flex work-spant">
+                    <div class="text-type"><label for="tx" class="me-2 ">work description <span class="text-danger"></span></label></div>
+                    <div class="time-spant">
+                        <input type="text" id="Summary"  class="form-control margin-left-26 pb-5" >
+                       
+                    </div>
+                </div>
+            </div>
+            </div>
+      </div>
+      <form action="">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Log Work</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+    <div class="container">
+        <div class="sec">
+
+            <div class="home">
+              <div class="nav d-flex">
+                  <div class="logo">
+                  <img src="https://jira.atlassian.com/secure/projectavatar?pid=18511&avatarId=105990" alt="jksjds">
+                  </div>
+                  <div class="head">
+                      <div class="ms-2">
+                              <li class=" pb-1 text-primary">POS change request / PCR-215 Need to do certification for RUPAY/PCR-200</li>
+                              <!-- <p class="fw-bold">Need certification apk Which was down for sqpark</p>  -->
+                              
+                             
+                              <div class="d-flex">
+                                <div id="editableText" contenteditable="false">
+                                  <p class="fw-bold">Need certification apk Which was down for sqpark</p>
+                                </div>
+                                
+                                <button id="editButton" class="btn btn-primary  ms-3">Edit</button>
+                              </div>
+                              
+                             
+                            </div>
+                      <div>
+                      </div>
+                  </div>
+              </div>
+              <div class="main-btn d-flex justify-content-between">
+              <div class="btn-left mt-4 ms-3">
+                  <!-- <a href="#btnradio2"><button type="button" class="btn bg-btn"><i class="fa-sharp fa-regular fa-comment me-2"></i>Comment</button></a> -->
+                  <!-- <label class="bg-btn comment   pb-2 px-2 clearfix" for="btnradio4">comment</label> -->
+                  <button type="button" class="btn bg-btn">Comment</button>
+                  <button type="button" class="btn bg-btn">
+                     <select id="ch">
+                    <option selected>Assign</option>
+                    <option>Abhinash</option>
+                    <option>Sushant</option>
+                    <option>deepak</option>
+                    <option>Bibhu</option>
+                    
+                   </select> </button>
+                 
+                  
+                      <button class="btn bg-btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        More
+                      </button>
+                      <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
+                        
+                        <li><button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                          Log Work
+                        </button></li>
+                        <li><a class="dropdown-item" href="../HTML/Create-task.html">Create Task</a></li>
+                        <!-- <li><a class="btn " data-bs-toggle="collapse" href="#collapseExample1" role="button"
+                          aria-expanded="false" aria-controls="  collapseExample1  ">
+                       Create  Task 
+                          </a></li> -->
+                        
+                      </ul>
+                      <button type="button" class="btn bg-btn">unit testing</button>
+                      <button type="button" class="btn bg-btn">pause</button>
+                      
+                    
+              </div>
+              <div class="right-buttom right-nav me-5">
+                  <div class="mt-4">
+                      <button type="button" class="btn bg-btn"><i class="fa-sharp fa-regular fa-share-from-square"></i></button>
+                      
+                    </div>
+                      
+              </div>
+          </div>
+
+          <div class="row d-flex px-3 pt-2">
+            <div class="col col-7">
+                <div class="Details">
+                  <!-- <i class="bi bi-chevron-down margin-5"></i> -->
+                    <p class="fw-bold"></i>Details</p>
+                    <div class="row   margin-left-26">
+                        <div class="col col-3 text-muted">Type</div>
+                        <div class="col col-3"><i class="bi bi-align-middle"></i>Sub-task</div>
+                        <div class="col col-3 text-muted">Status</div>
+                        <div class="col col-3 indipended"><span class="text-uppercase px-1 development-text fw-bold">in development</span></div>
+                    </div>
+                    <div class="row margin-left-26">
+                        <div class="col col-3 text-muted">Priority</div>
+                        <div class="col col-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="12 " fill="currentColor" class="bi bi-chevron-double-up text-danger fw-bold" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z"/>
+                          <path fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+                        </svg>Highest</div>
+                        <div class="col col-3"></div>
+                        <div class="col col-3" >(View-workflw)</div>
+                    </div>
+                    <div class="row margin-left-26 ">
+                        <div class="col col-3"></div>
+                        <div class="col col-3"></div>
+                        <div class="col col-3 text-muted">Resolution</div>
+                        <div class="col col-3 ">Unresolved</div>
+                    </div>
+                    <div class="row margin-left-26">
+                        <div class="col col-3 text-muted">Labels</div>
+                        <div class="col-9">
+                            <p>None</p>
+                        </div>                     
+                    </div>
+                    <div class="row margin-left-26">
+                        <div class="col col-3 text-muted">Last comment</div>
+                        <div class="col col-9">
+                            <p class="  " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                                  </svg> The request tog has been removed please check with follwing apk
+                            </p>
+                              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="#">POS change request / PCR-215 Need to do certification</a></li>
+                               
+                              </ul>
+                              
+                        </div>                     
+                    </div>
+                    
+                </div>
+                <div class="Descrption mt-4">
+                    <p class="fw-bold"> Descrption</p>
+                <div class="row margin-left-26 mt-1">
+                    <div class="col-12 ">
+                       
+                        <div class="d-flex">
+                          <div id="editableText1" contenteditable1="false">
+                            <p>desc. need certification apk for more funwhich was down foe  qspark connection  to  below base url</p>
+                            <a href="cjscdkjcs">jjcjdcjsdjcdjcdcdcjdjclksjkdcj</a>
+                          </div>
+                          
+                          <button id="editButton1" class="btn  ms-3 ">Edit</button>
+                        </div>
+                        
+                    </div>
+                </div>
+                    
+                </div>
+                <div class="Descrption mt-5">
+                  <p class="fw-bold"> Attachment</p>
+                  <div class="input-group margin-left-26">
+                    <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                    <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Button</button>
+                  </div>
+                  
+              </div>
+
+          <!-- <div class="Descrption mt-5 " id="">
+                <p class="fw-bold"> <i class="bi bi-chevron-down margin-5"></i>Sub Task</p>
+                <div class=" margin-left-26">
+                  <div class="collapse" id="collapseExample1">
+            
+                    <p>Project Id: <span>1</span></p>
+                
+                              <table class="table table-striped">
+                      
+                                          <tbody>
+                                            <tr>
+                                              <th scope="row">1</th>
+                                              <td>Terminal reversal for IPPB</td>
+                                              <td>CLOSED</td>
+                                              <td>Anil Sahoo</td>
+                                              <td>100%</td>
+                                            </tr>
+                                            <tr>
+                                              <th scope="row">2</th>
+                                              <td>simple application for reversal testing IPPB</td>
+                                              <td>CLOSED</td>
+                                              <td>@SUSHREE biswal</td>
+                                              <td>88%</td>
+                                            </tr>
+                                            <tr>
+                                              <th scope="row">3</th>
+                                              <td >implement  terminal reversal for CSC</td>
+                                              <td>CLOSED</td>
+                                              <td>Pujarani Mahaoatra</td>
+                                              <td>88%</td>
+                                            </tr>
+                                            <tr>
+                                              <th scope="row">2</th>
+                                              <td>simple application for reversal testing IPPB</td>
+                                              <td>CLOSED</td>
+                                              <td>@SUSHREE biswal</td>
+                                              <td>88%</td>
+                                            </tr>
+                                            <tr>
+                                              <th scope="row">2</th>
+                                              <td>simple application for reversal testing IPPB</td>
+                                              <td>CLOSED</td>
+                                              <td>@SUSHREE biswal</td>
+                                              <td>88%</td>
+                                            </tr>
+                                            <tr>
+                                              <th scope="row">2</th>
+                                              <td>simple application for reversal testing IPPB</td>
+                                              <td>CLOSED</td>
+                                              <td>@SUSHREE biswal</td>
+                                              <td>88%</td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                  
+                  </div>
+                 </div> 
+                
+            </div> -->
+             
+              <div class="Descrption mt-5">
+                <p class="fw-bold"></i>Activity</p>
+                <form action="">
+                  <div class="d-flex margin-left-26 ">
+                    <!-- <div class="me-2"><a href="">All</a></div>
+                    <div class="me-2"><a href="">comment</a></div>
+                    <div class="me-2"><a href="">Work Log</a></div>
+                    <div class="me-2"><a href="">History</a></div>
+                    <div class="me-2"><a href="">Activity</a></div> -->
+                    <!-- <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                      <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                      <label class="btn btn-outline-primary" for="btnradio1">All</label>
+                  
+                    
+                      <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                      <label class="btn btn-outline-primary" for="btnradio2">Comment</label>
+                    
+                      <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                      <label class="btn btn-outline-primary" for="btnradio3">History</label>
+
+                      <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+                      <label class="btn btn-outline-primary" for="btnradio4">Activity</label>
+                    </div> -->
+                    <div class="accordion " id="accordionFlushExample">
+                      <div class="accordion-item">
+                          <div class="row">
+          
+                              <div class="col col-12  me-2 d-flex">
+          
+          
+                                  <div class="  w-100 ">
+          
+                                      <h2 class="accordion-header" id="flush-headingOne">
+                                          <button class="accordion-button  " type="button" data-bs-toggle="collapse"
+                                              data-bs-target="#flush-collapseOne" aria-expanded="false" 
+                                              aria-controls="flush-collapseOne">
+                                              <div>
+                                                Activity
+                                              </div>
+                                          </button>
+                                      </h2>
+          
+          
+                                      </a>
+                                  </div>
+          
+                                  <div class=" w-100 ">
+          
+                                      <h2 class="accordion-header" id="flush-headingTwo">
+                                          <button class="accordion-button " type="button" data-bs-toggle="collapse"
+                                              data-bs-target="#flush-collapseTwo" aria-expanded="false" id="btnradio4"
+                                              aria-controls="flush-collapseTwo">
+                                              <div class="" id="">         
+                                                <label class=" " for="btnradio4">Comment</label>
+                                            </div>
+                                          </button>
+                                      </h2>
+                                  </div>
+          
+                                  <div class="w-100 ">
+          
+                                      <h2 class="accordion-header" id="flush-headingThree">
+                                          <button class="accordion-button " type="button" data-bs-toggle="collapse"
+                                              data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                              aria-controls="flush-collapseThree">
+                                             <div>WorkLog</div>
+                                          </button>
+                                      </h2>
+                                  </div>
+                                  
+          
+          
+                              </div>
+                              <div class="col  col-12">
+          
+                                  <!-- Activity -->
+                                  <div class=" d-block w-100 ">
+                                      <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                          aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                          <div class="accordion-body">
+                                              <div class=" scroll-bar" id="">
+                                                <div class="d-flex mt-2">
+                                                  <div class=""><span class="activity-name">AS</span></div>
+                                                  <div>
+                                                    <span>Anil Sahoo</span> <p class="d-inline text-muted">added a comment - 4day age at 10:29 PM</p>
+                                                    <p class="text-muted">Code added in the requestof getSdui api</p>
+                                                  </div>
+                                                </div>
+                                                <hr>
+                                                <div class="d-flex">
+                                                  <div><span class="activity-name">SD</span></div>
+                                                  <div>
+                                                    <span>Sumit Dash</span> <p class=" text-muted">Change the Assignee july 1, 2023 at 10:29 PM</p>
+                                                    <p class="text-muted"><span class="">Unssigned <i class="bi bi-arrow-right"></i></span><span class="Activity-short-name mx-2">SD</span>Sumit Dash </p>
+                                                  </div>
+                                                </div>
+          
+                                                
+          
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <!-- comment -->
+                                  <div class=" d-block w-100 ">
+                                      <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                          aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                          <div class="accordion-body">
+                                              
+                                               
+                                              <div class=" scroll-bar" id="">
+                                                <div class="d-flex mt-2">
+                                                  <div><span class="activity-name">AS</span></div>
+                                                  <div>
+                                                    <span>Anil Sahoo</span> <p class="d-inline text-muted">added a comment - 4day age at 10:29 PM</p>
+                                                    <p class="text-muted">Code added in the requestof getSdui api</p>
+                                                  </div>
+                                                </div>
+                                                <hr>
+                                                <div class="d-flex">
+                                                  <div><span class="activity-name">SD</span></div>
+                                                  <div>
+                                                    <span>Sumit Dash</span> <p class=" text-muted">added a comment - 4day age</p>
+                                                    <p class="text-muted">Also Clean the sdk bluetooth page, Status page, And error page Ui design </p>
+                                                  </div>
+                                                </div>
+          
+                                                
+          
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <!-- Log-work -->
+                                  <div class=" d-block w-100 ">
+                                      <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                          aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                          <div class="accordion-body">
+                                              <div class=" scroll-bar" id="">
+          
+                                                <div class="d-flex mb-3 mt-2">
+                                                  <div><span class="activity-name">AS</span></div>
+                                                  <div>
+                                                    <span>Anil Sahoo</span> <p class="d-inline text-muted m-0">Logged </p class="m-0"><span>1h </span>1 hour ago<p class="d-flex d-block m-0"></p>
+                                                    <p class="text-muted ">Code added in the requestof getSdui api</p>
+
+                                                  </div>
+                                                </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+          
+          
+          
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+                </form>
+                
+            </div>
+              
+            </div>
+            
+            <div class="col p-3 ms-5 right">
+                <div class="people">
+                    <p class="fw-bold">People</p>
+                    <div class="row margin-left-26">
+                        <div class="col-4 text-muted">Assigness</div>
+                        <div class="col-8">
+                             <li>
+                              <select name="" id="" class="Assign-name">
+                              <option value=""><p class="icone-name"><i class="bi bi-arrow-right"></i></p>Rajesh haldar</option>
+                              <option value="">Sushant behera</option>
+                              <option value="">Abhinash</option>
+                              <option value="">bibhu</option>
+                              
+                             </select></li>
+                             <li class="text-primary">Assign to me</li>
+                            </div>
+                    </div>
+                    <div class="report row margin-left-26 mt-2">
+                        
+                        <div class="col-4 text-muted">Report</div>
+                        <div class="col-8">
+                          <li>
+                            <select name="" id="" class="Assign-name">
+                            <option value="">Rajesh haldar</option>
+                            <option value="">Sushant behera</option>
+                            <option value="">Abhinash</option>
+                            <option value="">bibhu</option>
+                            
+                           </select></li>
+                        
+                            
+                        </div>
+                    </div>
+                    <div class="voter row margin-left-26 mt-2">
+                        <div class="col-4 text-muted">Vote</div>
+                        <div class="col-8">Vote for this issue</div>
+                    </div>
+                    <div class="watcher row margin-left-26 mt-2">
+                        <div class="col-4 text-muted">Watcher</div>
+                        <div class="col-8">Start watching this issue</div>
+                    </div>
+                </div>
+                <div class="date-date  ">
+                    <p class="fw-bold">Dates</p>
+                    <div class="row margin-left-26 mb-1">
+                        <div class="col-4 ">Create:</div>
+                        <div class="col-8 "> 
+                          <input type="text" class="form-control Attachment-input" id="datepicker" placeholder="Select a date"  name="start_date">
+                        </div>
+                    </div>
+                    <div class="row margin-left-26 mb-1">
+                        <div class="col-4">Update:</div>
+                        <div class="col-8 "><input type="text" class="form-control Attachment-input" id="datepicker1" placeholder="Select a date" name="start_date"></div>
+                    </div>
+                    <div class="row margin-left-26 mb-1">
+                        <div class="col-4 ">Start date:</div>
+                        <div class="col-8 "><input type="text" class="form-control Attachment-input" id="datepicker2" placeholder="Select a date" name="start_date"></div>
+                    </div>
+                    <div class="row margin-left-26 mb-1">
+                        <div class="col-4 ">End date:</div>
+                        <div class="col-8" ><input type="text" class="form-control Attachment-input" id="datepicker3" placeholder="Select a date" name="start_date"></div>
+                    </div>
+                </div>
+                <div class="Time-traking ">
+                  <p class="fw-bold">Time Traking</p>
+                  <div class="row margin-left-26 mb-1">
+                      <div class="col-4 ">Estimated</div>
+                      <div class="col-6 ">
+                        <div class="progress mt-1">
+                          <div class="progress-bar bg-success" role="progressbar" style="width: 75%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">75%</div>
+                        </div>
+                        </div>
+                        <div class="col-1 ms-3">7d</div>
+                  </div>
+                  <div class="row margin-left-26 mb-1">
+                    <div class="col-4 ">Remaining</div>
+                    <div class="col-6 ">
+                      <div class="progress mt-1">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 50%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">50%</div>
+                      </div>
+                      </div>
+                      <div class="col ms-3">3d</div>
+                </div>
+                <div class="row margin-left-26 mb-1">
+                  <div class="col-4 ">Logged</div>
+                  <div class="col-6">
+                    <div class="progress mt-1">
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                      
+                    </div>
+
+                    </div>
+                    <div class="col ms-3">2h</div>
+              </div>
+                  
+              </div>
+              <div class="Agile">
+                <p class="fw-bold">Agile</p>
+                <div class="row margin-left-26 mb-1">
+                    <div class="col me-1">Active Spring</div>
+                    <div class="col ">
+                      <span>Spring 8</span>end
+                      <p>23/jun/23</p>
+                      </div>
+                      </div>
+                </div>
+                
+             
+                
+            </div>
+            </div>
+          </div>
+    </div>
+
+</div>
+</div>
+  </main>
+  <!--Main layout-->
+  <script>
+    // $(document).ready(function(){
+    // $("#ch").chosen();
+    // });
+    $(document).ready(function(){
+     $("#ch").Chosen();
+    });
+</script>
+<script>
+ 
+
+
+  const editableText = document.getElementById('editableText');
+  const editButton = document.getElementById('editButton');
+
+  editButton.addEventListener('click', () => {
+    if (editableText.getAttribute('contenteditable') === 'false') {
+      editableText.setAttribute('contenteditable', 'true');
+      editButton.textContent = 'Save';
+    } else {
+      editableText.setAttribute('contenteditable', 'false');
+      editButton.textContent = 'Edit';
+    }
+  });
+</script>
+<script>
+  const editableText1 = document.getElementById('editableText1');
+  const editButton1 = document.getElementById('editButton1');
+
+  editButton1.addEventListener('click', () => {
+    if (editableText1.getAttribute('contenteditable') === 'false') {
+      editableText1.setAttribute('contenteditable', 'true');
+      editButton1.textContent = 'Save';
+    } else {
+      editableText1.setAttribute('contenteditable', 'false');
+      editButton1.textContent = 'Edit';
+    }
+  });
+</script>
+  <script>
+    let date = new Date();
+    var dd = String(date.getDate()).padStart(2, '0');
+    var mm = String(date.getMonth() + 1).padStart(2, '0');
+    var yyyy = date.getFullYear();
+    let today = mm + '/' + dd + '/' + yyyy;
+    console.log('today is', today);
+    $('#datepicker').dateDropper({
+        format: 'Y/m/d',
+        large: true,
+        largeDefault: true,
+        largeOnly: true,
+        theme: 'datetheme' 
+    });
+    </script>
+     <script>
+      let date1 = new Date();
+      var dd = String(date.getDate()).padStart(2, '0');
+      var mm = String(date.getMonth() + 1).padStart(2, '0');
+      var yyyy = date.getFullYear();
+      let today1 = mm + '/' + dd + '/' + yyyy;
+      console.log('today is', today);
+      $('#datepicker1').dateDropper({
+          format: 'Y/m/d',
+          large: true,
+          largeDefault: true,
+          largeOnly: true,
+          theme: 'datetheme' 
+      });
+      </script>
+       </script>
+       <script>
+        let date2 = new Date();
+        var dd = String(date.getDate()).padStart(2, '0');
+        var mm = String(date.getMonth() + 1).padStart(2, '0');
+        var yyyy = date.getFullYear();
+        let today2 = mm + '/' + dd + '/' + yyyy;
+        console.log('today is', today);
+        $('#datepicker2').dateDropper({
+            format: 'Y/m/d',
+            large: true,
+            largeDefault: true,
+            largeOnly: true,
+            theme: 'datetheme' 
+        });
+        </script>
+         </script>
+         <script>
+          let date3 = new Date();
+          var dd = String(date.getDate()).padStart(2, '0');
+          var mm = String(date.getMonth() + 1).padStart(2, '0');
+          var yyyy = date.getFullYear();
+          let today3 = mm + '/' + dd + '/' + yyyy;
+          console.log('today is', today);
+          $('#datepicker3').dateDropper({
+              format: 'Y/m/d',
+              large: true,
+              largeDefault: true,
+              largeOnly: true,
+              theme: 'datetheme' 
+          });
+          </script>
+          <script>
+            let date4 = new Date();
+            var dd = String(date.getDate()).padStart(2, '0');
+            var mm = String(date.getMonth() + 1).padStart(2, '0');
+            var yyyy = date.getFullYear();
+            let today4 = mm + '/' + dd + '/' + yyyy;
+            console.log('today is', today);
+            $('#datepicker4').dateDropper({
+                format: 'Y/m/d',
+                large: true,
+                largeDefault: true,
+                largeOnly: true,
+                theme: 'datetheme' 
+            });
+            </script>
+  
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.1/dist/js/select2.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

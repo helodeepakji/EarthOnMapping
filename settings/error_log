@@ -1,0 +1,10 @@
+[07-Sep-2023 15:01:13 Asia/Kolkata] PHP Warning:  require_once(vendor/autoload.php): Failed to open stream: No such file or directory in /home2/dstechsi/public_html/eom/settings/downloadExcel.php on line 3
+[07-Sep-2023 15:01:13 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Failed opening required 'vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/dstechsi/public_html/eom/settings/downloadExcel.php:3
+Stack trace:
+#0 {main}
+  thrown in /home2/dstechsi/public_html/eom/settings/downloadExcel.php on line 3
+[07-Sep-2023 15:01:22 Asia/Kolkata] PHP Warning:  require_once(vendor/autoload.php): Failed to open stream: No such file or directory in /home2/dstechsi/public_html/eom/settings/downloadExcel.php on line 3
+[07-Sep-2023 15:01:22 Asia/Kolkata] PHP Fatal error:  Uncaught Error: Failed opening required 'vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/dstechsi/public_html/eom/settings/downloadExcel.php:3
+Stack trace:
+#0 {main}
+  thrown in /home2/dstechsi/public_html/eom/settings/downloadExcel.php on line 3

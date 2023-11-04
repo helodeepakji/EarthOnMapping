@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+    integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/Login.css">
+</head>
+
+<body>
+  <header>
+    <!-- Sidebar -->
+    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white d-flex">
+      <div>
+        <div class="position-sticky">
+          <div class="list-group list-group-flush mx-3 mt-4">
+            <a href="index.html" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+              <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
+            </a>
+            <a href="Log_work.html" class="list-group-item list-group-item-action py-2 ripple active">
+              <i class="fas fa-chart-area fa-fw me-3"></i><span>Log Work</span>
+            </a>
+            <!-- <a href="Login.html" class="list-group-item list-group-item-action py-2 ripple" ><i
+              class="fas fa-lock fa-fw me-3"></i><span>Login</span></a> -->
+            <a href="Create-task.html" class="list-group-item list-group-item-action py-2 ripple"><i
+                class="fas fa-chart-line fa-fw me-3"></i><span>Create Task</span></a>
+            <a href="Create-project.html" class="list-group-item list-group-item-action py-2 ripple">
+              <i class="fas fa-chart-pie fa-fw me-3"></i><span>Create project</span>
+            </a>
+            <a href="Leave.html" class="list-group-item list-group-item-action py-2 ripple"><i
+                class="fas fa-chart-bar fa-fw me-3"></i><span>Leave application</span></a>
+            <a href="attandance.html" class="list-group-item list-group-item-action py-2 ripple"><i
+                class="fas fa-globe fa-fw me-3"></i><span>Attendance</span></a>
+            <a href="project.html" class="list-group-item list-group-item-action py-2 ripple"><i
+                class="fas fa-building fa-fw me-3"></i><span>project</span></a>
+            <a href="dahbord.html" class="list-group-item list-group-item-action py-2 ripple"><i
+                class="fas fa-calendar fa-fw me-3"></i><span>dashbord</span></a>
+            <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+                class="fas fa-users fa-fw me-3"></i><span>Users</span></a>
+            <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+                class="fas fa-money-bill fa-fw me-3"></i><span>Sales</span></a>
+          </div>
+        </div>
+
+      </div>
+
+
+    </nav>
+
+    <!-- Sidebar -->
+
+    <!-- Navbar -->
+    <div id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu"
+          aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="#">
+          <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="25" alt="MDB Logo"
+            loading="lazy" />
+        </a>
+        <ul class="navbar-nav ms-auto d-flex flex-row">
+          <!-- Avatar -->
+          <div class="dropdown float-end">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fab fa-github"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="profile.html">My profile</a></li>
+              <li><a class="dropdown-item" href="#">Settings</a></li>
+              <li><a class="dropdown-item" href="#">Logout</a></li>
+            </ul>
+          </div>
+        </ul>
+        <!-- Container wrapper -->
+      </div>
+    </div>
+    <!-- Navbar -->
+  </header>
+
+  <main style="margin-top: 58px;">
+    <div class="container pt-4">
+      <div class="Login_page">
+        <section class="vh-100">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-6 text-black">
+                <h1 class="mb-3">Welcome to EOM</h1>
+                <div class="d-flex align-items-center ">
+
+                  <form style="width: 23rem;">
+
+                    <h3 class="fw-normal mb-2 pb-1" style="letter-spacing: 1px;">Log in</h3>
+
+                    <div class="form-outline mb-2 form-group">
+                      <input type="email" id="email" class="email form-control form-control-md" required />
+                      <label class="form-label" for="email">Email address</label>
+                    </div>
+
+                    <div class="form-outline mb-4 form-group">
+                      <input type="password" id="pass" class="pass form-control form-control-md" required />
+                      <label class="form-label" for="pass">Password</label>
+                      <p><input type="checkbox" name="" id=""><span class="ms-2">remember my login on this
+                          Computer</span></p>
+                      <p>Not a member? To request an account, Please contact your jira administration</p>
+                    </div>
+
+                    <div class="pt-1 mb-2 form-group">
+                      <button class="btn btn-info btn-lg btn-block" type="submit">Login</button>
+                    </div>
+                    <p id="wm" style="display: none; color: red;"></p>
+                    <p class="small mb-3 pb-lg-2"><a class="text-muted" href="#!">Forgot password?</a></p>
+                    <p>Don't have an account? <a href="#!" class="link-info">Register here</a></p>
+
+                  </form>
+
+                </div>
+
+              </div>
+              <div class="col-sm-6 px-0 d-none d-sm-block ">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                  alt="Login image" style="object-fit: cover; object-position: left;">
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function validateForm() {
+      var name = document.getElementById("name").value;
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("pass").value;
+      var confirmPassword = document.getElementById("confirm-password").value;
+      var wm = document.getElementById("wm").values;
+
+      if (name === "" || form2Example18 === "" || password === "" || confirmPassword === "") {
+        document.getElementById("warning-message").style.display = "block";
+        name.innerHTML = "name is requred"
+        return false;
+      }
+      if (pass.length <= 8) {
+        wm.innerHTML = "faield"
+
+      }
+
+      return true;
+    }
+  </script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>
