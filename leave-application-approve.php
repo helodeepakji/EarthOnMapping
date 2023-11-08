@@ -45,7 +45,7 @@ $countCancel = count($leavesCancel);
         </span>
       </button></a>
       <a href="#" style="display: flex;align-items: center;margin: 0 10px">
-      <button type="button" class="btn btn-primary position-relative">
+      <button type="button" class="btn btn-primary position-relative btn_active">
         Approve
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
           <?php echo $countAprrove ?>
