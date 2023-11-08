@@ -116,7 +116,7 @@ include 'settings/header.php'
                                 <div class="col-12 col-sm-6 p-2">
                                     <div class="form-group">
                                         <label>Time (minute)</label>
-                                        <input type="number" class="form-control" name="time" min="1" required>
+                                        <input type="number" class="form-control" name="time" min="1" value="30" required readonly>
                                     </div>
                                 </div>
                             </div>
@@ -307,6 +307,27 @@ include 'settings/header.php'
     });
 
     setTimeout(setTimeAndRemoveLoader, differenceInMilliseconds);
+
+    $('#break_type').change(function(){
+        var break_type = $('#break_type').val();
+        if(break_type == 'team_meeting'){
+            $('#team_meeting_box').html(` <div class="col-12 col-sm-6 p-2">
+                    <div class="form-group">
+                        <label>Who</label>
+                        <input type="text" class="form-control" name="who" required>
+                    </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 p-2">
+                    <div class="form-group">
+                        <label>Why</label>
+                        <input type="text" class="form-control" name="why" required>
+                    </div>
+                    </div>`);
+        }else{
+        $('#team_meeting_box').html('');
+        }
+    });
 
     function deleteTask(task_id) {
         $.ajax({

@@ -369,7 +369,7 @@ include 'settings/header.php'
                 <div class="col-12 col-sm-6 p-2">
                   <div class="form-group">
                     <label>Time (minute)</label>
-                    <input type="number" class="form-control" name="time" min="1" required>
+                    <input type="number" class="form-control" name="time" min="1" value="30" required readonly>
                   </div>
                 </div>
               </div>
