@@ -26,6 +26,11 @@ $qaCount->execute();
 $qaCount = $qaCount->fetchAll(PDO::FETCH_ASSOC);
 $countQa = count($qaCount);
 
+$vectorCount = $conn->prepare("SELECT * FROM `tasks` Where `status` = 'ready_for_vector'");
+$vectorCount->execute();
+$vectorCount = $vectorCount->fetchAll(PDO::FETCH_ASSOC);
+$countVector = count($vectorCount);
+
 $sql2 = $conn->prepare("SELECT * FROM `users` Where `user_type` = 'user'");
 $sql2->execute();
 $users = $sql2->fetchAll(PDO::FETCH_ASSOC);
@@ -93,7 +98,7 @@ include 'settings/header.php'
       </button>
     </a>
     <a href="#" style="display: flex;align-items: center;margin: 0 10px"><button type="button"
-        class="btn btn-primary position-relative">
+        class="btn btn-primary position-relative btn_active">
         QC
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
           <?php echo $countQC ?>
@@ -109,11 +114,19 @@ include 'settings/header.php'
         </span>
       </button>
     </a>
-
+    <a href="vector-task.php" style="display: flex;align-items: center;margin: 0 10px">
+      <button type="button" class="btn btn-primary position-relative">
+        Vector
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <?php echo $countVector ?>
+          <span class="visually-hidden">unread messages</span>
+        </span>
+      </button>
+    </a>
   </div>
   <div class="container pt-5">
     <div class="container">
-      <div class="d-flex justify-content-between" style="padding: 0 0 40px 0; font-size: 25px;">
+      <div class="d-flex justify-content-between" style="font-size: 25px;">
         <p class="fw-bold">Assign</p>
         <div style="display: flex;">
           <select name="project" id="projectSelect" class="form-control" style="margin :0 15px;">
@@ -127,6 +140,7 @@ include 'settings/header.php'
           <a class="btn btn-primary" onclick="getAddAssign()">Assign</a>
         </div>
       </div>
+      <p class="btn btn-success btn-sm" style="margin: 20px 0;" onclick="checkBoxChanged()"><i class="fa-solid fa-check-double" style="margin: 0 10px;"></i>Select All</p>
       <table id="dataTable" class="display">
         <thead>
           <tr>
@@ -178,6 +192,10 @@ include 'settings/header.php'
       y: 'top'
     }
   });
+
+  function checkBoxChanged() {
+      $('.select_box').click()
+  }
 
   function deleteUser(id) {
     $.ajax({

@@ -1,6 +1,6 @@
 <?php
 
-$current_page = 'vector-task';
+$current_page = 'assign-task';
 
 session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
@@ -12,9 +12,25 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
 
 include 'settings/config/config.php';
 
+$sql = $conn->prepare("SELECT * FROM `tasks` Where `status` = 'pending'");
+$sql->execute();
+$tasks = $sql->fetchAll(PDO::FETCH_ASSOC);
+$countEmployee = count($tasks);
+
+$qcCount = $conn->prepare("SELECT * FROM `tasks` Where `status` = 'ready_for_qc'");
+$qcCount->execute();
+$qcCount = $qcCount->fetchAll(PDO::FETCH_ASSOC);
+$countQC = count($qcCount);
+
+$qaCount = $conn->prepare("SELECT * FROM `tasks` Where `status` = 'ready_for_qa'");
+$qaCount->execute();
+$qaCount = $qaCount->fetchAll(PDO::FETCH_ASSOC);
+$countQa = count($qaCount);
+
 $vector = $conn->prepare("SELECT * FROM `tasks` Where `status` = 'ready_for_vector'");
 $vector->execute();
 $vector = $vector->fetchAll(PDO::FETCH_ASSOC);
+$countVector = count($vector);
 
 $sql2 = $conn->prepare("SELECT * FROM `users` Where `user_type` = 'user'");
 $sql2->execute();
@@ -67,12 +83,50 @@ include 'settings/header.php'
 </div>
 
 <main style="margin-top: 100px;">
+<div class="btn-group   justify-content-center d-flex  mt-3 " role="group">
+    <a href="assign-employee-task.php" style="display: flex;align-items: center;margin: 0 10px">
+      <button type="button" class="btn btn-primary position-relative">
+        Employee
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <?php echo $countEmployee ?>
+          <span class="visually-hidden">unread messages</span>
+        </span>
+      </button>
+    </a>
+    <a href="#" style="display: flex;align-items: center;margin: 0 10px"><button type="button"
+        class="btn btn-primary position-relative ">
+        QC
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <?php echo $countQC ?>
+          <span class="visually-hidden">unread messages</span>
+        </span>
+      </button></a>
+    <a href="assign-qa-task.php" style="display: flex;align-items: center;margin: 0 10px">
+      <button type="button" class="btn btn-primary position-relative">
+        QA
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <?php echo $countQa ?>
+          <span class="visually-hidden">unread messages</span>
+        </span>
+      </button>
+    </a>
+    <a href="vector-task.php" style="display: flex;align-items: center;margin: 0 10px">
+      <button type="button" class="btn btn-primary position-relative btn_active">
+        Vector
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <?php echo $countVector ?>
+          <span class="visually-hidden">unread messages</span>
+        </span>
+      </button>
+    </a>
+  </div>
   <div class="container pt-5">
     <div class="container">
-      <div class="d-flex justify-content-between" style="padding: 0 0 40px 0; font-size: 25px;">
+      <div class="d-flex justify-content-between" style="font-size: 25px;">
         <p class="fw-bold">Vector Task</p>
         <a class="btn btn-primary" onclick="getAddAssign()">Assign</a>
       </div>
+      <p class="btn btn-success btn-sm" style="margin: 20px 0;" onclick="checkBoxChanged()"><i class="fa-solid fa-check-double" style="margin: 0 10px;"></i>Select All</p>
       <table id="dataTable" class="display">
         <thead>
           <tr>
@@ -120,6 +174,10 @@ include 'settings/header.php'
       y: 'top'
     }
   });
+
+  function checkBoxChanged() {
+      $('.select_box').click()
+  }
 
 
   // function getAddAssign(task_id , project_id){

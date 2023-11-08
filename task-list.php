@@ -71,10 +71,13 @@ include 'settings/header.php'
     z-index: 9;
 
   }
+  .overflow{
+    overflow: auto;
+  }
 </style>
 
 <main style="margin-top: 100px;">
-<div class="btn-group   justify-content-center d-flex  mt-3 " role="group">
+  <div class="btn-group   justify-content-center d-flex  mt-3 " role="group">
         <a href="#" style="display: flex;align-items: center;margin: 0 10px">
         <button type="button" class="btn btn-primary position-relative">
         PRO
@@ -109,11 +112,11 @@ include 'settings/header.php'
         </span>
         </button>
         </a>
-    </div>
+  </div>
   <div class="container pt-1">
     <div class="accordion accordion-flush" id="accordionFlushExample">
       <div class="accordion-item">
-        <div class="row">
+        <div class="row overflow">
           <div class="col border col-8 p-3" style="width:99%;height: 500px;">
             <div class="text-center">
               <button type="button" class="btn bg-white btn1  text-center">PRO Task List Under project</button>
@@ -155,7 +158,7 @@ include 'settings/header.php'
                           $t_id = base64_encode($task['task_id']);
 
                           ?>
-                          <tr>
+                          <tr style="<?php echo $taskss['is_reassigned'] ? 'background: #e16767;' : ''; ?>">
                             <th>
                               <?php echo date('j M, Y h:i A', strtotime($task['created_at']) )?>
                             </th>

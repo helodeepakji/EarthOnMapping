@@ -70,9 +70,9 @@
                         <a href="assign-employee-task.php"
                             class="list-group-item list-group-item-action py-2 ripple <?php echo $current_page == "assign-task" ? "active" : "" ?>"><i
                                 class="fas fa-user fa-fw me-3"></i><span>Assign Task</span></a>
-                        <a href="vector-task.php"
-                            class="list-group-item list-group-item-action py-2 ripple <?php echo $current_page == "vector-task" ? "active" : "" ?>"><i
-                                class="fas fa-vector-square fa-fw me-3"></i><span>Vector Task</span></a>
+                        <a href="reassign-employee-task.php"
+                            class="list-group-item list-group-item-action py-2 ripple <?php echo $current_page == "reassign-task" ? "active" : "" ?>"><i
+                                class="fas fa-vector-square fa-fw me-3"></i><span>Reassign Task</span></a>
 
                         <?php if($_SESSION['userType'] != 'teamleader'){ ?> 
                         <a href="employee-list.php"

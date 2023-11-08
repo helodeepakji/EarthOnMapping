@@ -66,6 +66,7 @@
         if($_POST['task_id'] !='' && $_POST['project_id'] != ''){
             $task_id = $_POST['task_id'];
             $project_id = $_POST['project_id'];
+            $number = count($task_id);
             foreach ($task_id as $key => $value) {
 
                 $project = $conn->prepare("SELECT * FROM `projects` WHERE `project_id` = ?");
@@ -105,6 +106,7 @@
 
                         $taken = $hours.'H '.$minutes.'M';
                         $temp = $hours + ($minutes/60);
+                        $temp = $temp / $number;
                         $effciency = ($task_estimated_hour/$temp)*100;
 
                         $taskupdate = $conn->prepare("UPDATE `tasks` SET `status`= ? WHERE `task_id` = ? AND `project_id` = ?");
@@ -117,7 +119,7 @@
                         useBreak($conn, $user_id , $task_id[$key]);
                         
                         $effciencyAdd = $conn->prepare('INSERT INTO `efficiency`(`user_id`, `task_id`, `project_id`, `profile`, `efficiency`) VALUES (? , ? , ? , ? , ?)');
-                        $effciencyAdd->execute([$user_id , $task_id[$key], $project_id[$key], 'qa' , $effciency/count($task_id)]);
+                        $effciencyAdd->execute([$user_id , $task_id[$key], $project_id[$key], 'qa' , $effciency]);
 
                         $assignSql = $conn->prepare("UPDATE `assign` SET `status` = ? WHERE `task_id` = ? AND `project_id` = ? AND `role` = ?");
                         $assignSql->execute(['complete', $task_id[$key], $project_id[$key] , 'qa']);
@@ -142,6 +144,7 @@
         if($_POST['task_id'] !='' && $_POST['project_id'] != ''){
             $task_id = $_POST['task_id'];
             $project_id = $_POST['project_id'];
+            $number = count($task_id);
             foreach ($task_id as $key => $value) {
   
                 $check = $conn->prepare("SELECT * FROM `tasks` WHERE `task_id` = ? AND `project_id` = ? AND `status` = ?");
@@ -173,6 +176,7 @@
 
                         $taken = $hours.'H '.$minutes.'M';
                         $temp = $hours + ($minutes/60);
+                        $temp = $temp / $number;
                         $effciency = ($task_estimated_hour/$temp)*100;
 
                         $taskupdate = $conn->prepare("UPDATE `tasks` SET `status`= ? WHERE `task_id` = ? AND `project_id` = ?");
@@ -185,7 +189,7 @@
 
                         
                         $effciencyAdd = $conn->prepare('INSERT INTO `efficiency`(`user_id`, `task_id`, `project_id`, `profile`, `efficiency`) VALUES (? , ? , ? , ? , ?)');
-                        $effciencyAdd->execute([$user_id , $task_id[$key], $project_id[$key], 'vector' , $effciency/count($task_id)]);
+                        $effciencyAdd->execute([$user_id , $task_id[$key], $project_id[$key], 'vector' , $effciency]);
 
                         $assignSql = $conn->prepare("UPDATE `assign` SET `status` = ? WHERE `task_id` = ? AND `project_id` = ? AND `role` = ?");
                         $assignSql->execute(['complete', $task_id[$key], $project_id[$key] , 'vector']);

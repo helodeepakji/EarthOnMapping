@@ -191,6 +191,18 @@ include 'settings/header.php'
                                     } else {
                                         $AssigDate = '';
                                     }
+
+                                    if($value['vector'] != ''){
+                                        $vectorData = '<td>'.$value['vector'].'</td>
+                                        <td>
+                                            <div class="progress" role="progressbar" aria-label="Danger   striped example" aria-valuenow="'.$value['vector_efficiency'].'" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar progress-bar-striped  bg-success " style="width: '.$value['vector_efficiency'].'%">'.$value['vector_efficiency'].'%</div></div>
+                                            <br>
+                                            '.round($value['vector_efficiency'], 2).'%
+                                        </td>
+                                        <td style="color:red">'. $Vectorstart .'<br><span style="color:green">'. $VectorComplete .'</span></td>';
+                                    }else{
+                                        $vectorData = '<td></td><td></td><td></td>';
+                                    }
                                     
                                     $project_efficiency = ($value['employee_efficiency'] + $value['qc_efficiency'] + $value['qa_efficiency'] + $value['vector_efficiency'])/4;
 
@@ -201,21 +213,31 @@ include 'settings/header.php'
                                         <td>'.$value["Task"].'</td>
 
                                         <td>'.$value['employee'].'</td>
-                                        <td><div class="progress" role="progressbar" aria-label="Danger   striped example" aria-valuenow="'.$value['employee_efficiency'].'" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar progress-bar-striped  bg-success " style="width: '.$value['employee_efficiency'].'%">'.$value['employee_efficiency'].'%</div></div></td>
+                                        <td>
+                                            <div class="progress" role="progressbar" aria-label="Danger   striped example" aria-valuenow="'.$value['employee_efficiency'].'" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar progress-bar-striped  bg-success " style="width: '.$value['employee_efficiency'].'%">'.$value['employee_efficiency'].'%</div></div>
+                                            <br>
+                                            '.round($value['employee_efficiency'], 2).'%
+                                        </td>
                                         <td style="color:red">'.$Prostart.'<br><span style="color:green">'.$Procomplete .'</span></td>
                                         
                                         <td>'.$value['qc'].'</td>
-                                        <td><div class="progress" role="progressbar" aria-label="Danger   striped example" aria-valuenow="'.$value['qc_efficiency'].'" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar progress-bar-striped  bg-success " style="width: '.$value['qc_efficiency'].'%">'.$value['qc_efficiency'].'%</div></div></td>
+                                        <td>
+                                            <div class="progress" role="progressbar" aria-label="Danger   striped example" aria-valuenow="'.$value['qc_efficiency'].'" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar progress-bar-striped  bg-success " style="width: '.$value['qc_efficiency'].'%">'.$value['qc_efficiency'].'%</div></div>
+                                            <br>
+                                            '.round($value['qc_efficiency'], 2).'%
+                                        </td>
                                         <td style="color:red">'. $QcStart .'<br><span style="color:green">'. $Qccomplete .'</span></td>
                                         
                                         <td>'.$value['qa'].'</td>
-                                        <td><div class="progress" role="progressbar" aria-label="Danger   striped example" aria-valuenow="'.$value['qa_efficiency'].'" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar progress-bar-striped  bg-success " style="width: '.$value['qa_efficiency'].'%">'.$value['qa_efficiency'].'%</div></div></td>
+                                        <td>
+                                            <div class="progress" role="progressbar" aria-label="Danger   striped example" aria-valuenow="'.$value['qa_efficiency'].'" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar progress-bar-striped  bg-success " style="width: '.$value['qa_efficiency'].'%">'.$value['qa_efficiency'].'%</div></div>
+                                            <br>
+                                            '.round($value['qa_efficiency'], 2).'%
+                                        </td>
                                         <td style="color:red">'. $Qastart .'<br><span style="color:green">'. $QaComplete .'</span></td>
                                         
 
-                                        <td>'.$value['vector'].'</td>
-                                        <td><div class="progress" role="progressbar" aria-label="Danger   striped example" aria-valuenow="'.$value['vector_efficiency'].'" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar progress-bar-striped  bg-success " style="width: '.$value['vector_efficiency'].'%">'.$value['vector_efficiency'].'%</div></div></td>
-                                        <td style="color:red">'. $Vectorstart .'<br><span style="color:green">'. $VectorComplete .'</span></td>
+                                        '.$vectorData.'
                                         
                                         <td><div class="progress" role="progressbar" aria-label="Danger   striped example" aria-valuenow="'.$project_efficiency.'" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar progress-bar-striped  bg-success " style="width: '.$project_efficiency.'%">'.$project_efficiency.'%</div></div></td>
                                     </tr>

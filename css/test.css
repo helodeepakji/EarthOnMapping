@@ -469,3 +469,11 @@ main{
     display: grid;
     align-items: center;
 }
+
+a{
+    text-decoration: none;
+}
+
+.btn_active{
+    background-color: #969696;
+}

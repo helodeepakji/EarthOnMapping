@@ -255,6 +255,7 @@ include 'settings/header.php' ?>
                 <table class="table table-striped " id="dataTable">
                   <thead>
                     <tr>
+                      <th scope="col">#</th>
                       <th scope="col">Date</th>
                       <th scope="col">Name</th>
                       <th scope="col">Time</th>
@@ -304,7 +305,8 @@ include 'settings/header.php' ?>
 
                       echo '
                           <tr>
-                            <th class>Date ' . date("d-m-y", strtotime($attendenceList['date'])) . ' '.$late_login.' '.$late_login_status.'</th>
+                            <th style="color:transparent;width:0;font-size:0px">'.$attendenceList['id'].'</th>
+                            <th class> ' . date("d-m-y", strtotime($attendenceList['date'])) . ' '.$late_login.' '.$late_login_status.'</th>
                             <th class>' . $attend_user['first_name'] . ' ' . $attend_user['last_name'] . '</th>
                             <th class="'.($late_login_status != '' ? 'text-danger' : '').'">' . date("h:i A", strtotime($attendenceList['clock_in_time'])) . ' <p>' . $clock_out . '</p></th>
                           </tr>                  

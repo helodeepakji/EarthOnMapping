@@ -1,6 +1,6 @@
 <?php
 
-$current_page = 'assign-task';
+$current_page = 'reassign-task';
 
 session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
@@ -11,22 +11,22 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
 }
 
 include 'settings/config/config.php';
-$sql = $conn->prepare("SELECT * FROM `tasks` Where `status` = 'pending'");
+$sql = $conn->prepare("SELECT * FROM `tasks` Where `status` = 'ready'");
 $sql->execute();
 $tasks = $sql->fetchAll(PDO::FETCH_ASSOC);
 $countEmployee = count($tasks);
 
-$qcCount = $conn->prepare("SELECT * FROM `tasks` Where `status` = 'ready_for_qc'");
+$qcCount = $conn->prepare("SELECT * FROM `tasks` Where `status` = 'assign_qc'");
 $qcCount->execute();
 $qcCount = $qcCount->fetchAll(PDO::FETCH_ASSOC);
 $countQc = count($qcCount);
 
-$qaCount = $conn->prepare("SELECT * FROM `tasks` Where `status` = 'ready_for_qa'");
+$qaCount = $conn->prepare("SELECT * FROM `tasks` Where `status` = 'assign_qa'");
 $qaCount->execute();
 $qaCount = $qaCount->fetchAll(PDO::FETCH_ASSOC);
 $countQa = count($qaCount);
 
-$vectorCount = $conn->prepare("SELECT * FROM `tasks` Where `status` = 'ready_for_vector'");
+$vectorCount = $conn->prepare("SELECT * FROM `tasks` Where `status` = 'assign_vector'");
 $vectorCount->execute();
 $vectorCount = $vectorCount->fetchAll(PDO::FETCH_ASSOC);
 $countVector = count($vectorCount);
@@ -58,7 +58,7 @@ include 'settings/header.php'
         <div class="card-body p-2">
           <form id="addAssign">
             <input type="hidden" class="form-control" name="type" value="addAssign" required>
-            <input type="hidden" class="form-control" name="role" value="employee" required>
+            <input type="hidden" class="form-control" name="role" value="qc" required>
             <div class="row form-row mb-3 p-2">
               <div class="col-12 col-sm-12">
                 <div class="form-group">
@@ -88,16 +88,16 @@ include 'settings/header.php'
 
 <main style="margin-top: 100px;">
   <div class="btn-group   justify-content-center d-flex  mt-3 " role="group">
-    <a href="#" style="display: flex;align-items: center;margin: 0 10px">
-      <button type="button" class="btn btn-primary position-relative btn_active">
+    <a href="reassign-employee-task.php" style="display: flex;align-items: center;margin: 0 10px">
+      <button type="button" class="btn btn-primary position-relative ">
         Employee
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
           <?php echo $countEmployee ?>
           <span class="visually-hidden">unread messages</span>
         </span>
       </button></a>
-    <a href="assign-qc-task.php" style="display: flex;align-items: center;margin: 0 10px">
-      <button type="button" class="btn btn-primary position-relative">
+    <a href="#" style="display: flex;align-items: center;margin: 0 10px">
+      <button type="button" class="btn btn-primary position-relative btn_active">
         QC
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
           <?php echo $countQc ?>
@@ -105,7 +105,7 @@ include 'settings/header.php'
         </span>
       </button>
     </a>
-    <a href="assign-qa-task.php" style="display: flex;align-items: center;margin: 0 10px">
+    <a href="reassign-qa-task.php" style="display: flex;align-items: center;margin: 0 10px">
       <button type="button" class="btn btn-primary position-relative">
         QA
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -114,7 +114,7 @@ include 'settings/header.php'
         </span>
       </button>
     </a>
-    <a href="vector-task.php" style="display: flex;align-items: center;margin: 0 10px">
+    <a href="reassign-vector-task.php" style="display: flex;align-items: center;margin: 0 10px">
       <button type="button" class="btn btn-primary position-relative">
         Vector
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -150,17 +150,26 @@ include 'settings/header.php'
             <th scope="col">Project</th>
             <th scope="col">Area Sqkm</th>
             <th scope="col">Complexity</th>
+            <th scope="col">Assigned</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody id="tableBody">
           <?php
           $i = 1;
-          foreach ($tasks as $task) {
+          foreach ($qcCount as $task) {
 
             $project = $conn->prepare('SELECT * FROM `projects` WHERE `project_id` = ?');
             $project->execute([$task['project_id']]);
             $project = $project->fetch(PDO::FETCH_ASSOC);
+            
+            $assign = $conn->prepare("SELECT * FROM `assign` WHERE `task_id` = ? AND `role` = 'qc' AND `status` = 'assign'");
+            $assign->execute([$task['task_id']]);
+            $assign = $assign->fetch(PDO::FETCH_ASSOC);
+            
+            $user = $conn->prepare("SELECT * FROM `users` WHERE `id` = ? ");
+            $user->execute([$assign['user_id']]);
+            $user = $user->fetch(PDO::FETCH_ASSOC);
 
             $id = base64_encode($task['task_id']);
             echo '
@@ -171,6 +180,7 @@ include 'settings/header.php'
                       <td>' . $task['project_id'] . ' (' . $project['project_name'] . ')</</td>
                       <td>' . $task['area_sqkm'] . '</td>
                       <td>' . $task['complexity'] . '</td>
+                      <td>' . $user['first_name'] . ' ' . $user['last_name'] . '</td>
                       <td><a class="btn btn-danger" onclick="deleteUser(\'' . $task['task_id'] . '\')">Delete</a></td>
                     </tr>
                   ';
@@ -256,7 +266,7 @@ include 'settings/header.php'
     event.preventDefault();
     var formData = new FormData(this);
     $.ajax({
-      url: 'settings/api/assignApi.php',
+      url: 'settings/api/reassignApi.php',
       type: 'POST',
       data: formData,
       processData: false,
