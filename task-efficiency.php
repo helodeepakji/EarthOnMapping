@@ -38,15 +38,25 @@ foreach ($output as $value) {
         $projectDetail = $projectDetail->fetch(PDO::FETCH_ASSOC);
 
         $profile = $row["profile"];
-        $complate_time = $conn->prepare("SELECT * FROM `assign` WHERE `role` = ? AND `task_id` = ? AND `user_id` = ?");
-        $complate_time->execute([$profile , $row["task_id"], $row["user_id"]]);
+        if($profile == "employee") {
+            $work_log_status = 'ready';
+        }else if($profile == "qc"){
+            $work_log_status = 'assign_qc';
+        }else if($profile == "qa"){
+            $work_log_status = 'assign_qa';
+        }else if($profile == "vector"){
+            $work_log_status = 'assign_vector';
+        }
+
+        $complate_time = $conn->prepare("SELECT * FROM `work_log` WHERE `task_id` = ? AND `project_id` = ? AND `prev_status` = ?  ORDER BY `created_it` DESC");
+        $complate_time->execute([$row["task_id"], $row["project_id"] , $work_log_status]);
         $complate_time = $complate_time->fetch(PDO::FETCH_ASSOC);
 
         $efficiency = $row["efficiency"];
         $profileData[$profile] = $sql['first_name'].' '.$sql['last_name'];
         $profileData[$profile.'_efficiency'] = $efficiency;
         $profileData[$profile.'_complete_time'] = $row["created_at"];
-        $profileData[$profile.'_start_time'] = $complate_time['created_at'];
+        $profileData[$profile.'_start_time'] = $complate_time['created_it'];
         $profileData["Task"] = $row["task_id"];
         $profileData["Project"] = $row["project_id"];
         $profileData["Project_name"] = $projectDetail['project_name'];

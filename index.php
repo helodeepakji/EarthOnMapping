@@ -281,7 +281,7 @@ include 'settings/header.php' ?>
 
                       if ($clock_in_time >= strtotime('5:00 AM') && $clock_in_time <= strtotime('8:00 AM')) {
                         $late_login = '<br><span class="badge badge-danger late_login morning">Morning</span>';
-                        if($clock_in_time > strtotime('6:15 AM')){
+                        if($clock_in_time >= strtotime('6:45 AM')){
                           $late_login_status = '<span class="badge badge-danger late_login">Late</span>';
                         }else{
                           $late_login_status = '';
@@ -295,7 +295,7 @@ include 'settings/header.php' ?>
                         }
                       } else {
                         $late_login = '<br><span class="badge badge-danger late_login general">General</span>';
-                        if($clock_in_time > strtotime('9:15 AM')){
+                        if($clock_in_time >= strtotime('9:15 AM')){
                           $late_login_status = '<span class="badge badge-danger late_login">Late</span>';
                         }else{
                           $late_login_status = '';

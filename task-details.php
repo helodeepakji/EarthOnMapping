@@ -162,6 +162,8 @@ $sqli->execute([$task_id]);
 $WorkLogs = $sqli->fetchAll(PDO::FETCH_ASSOC);
 function logHour($WorkLogs)
 {
+  $total_hours = 0;
+  $total_minutes = 0;
   if (!$WorkLogs) {
     return 0;
   }
@@ -369,7 +371,7 @@ include 'settings/header.php'
                 <div class="col-12 col-sm-6 p-2">
                   <div class="form-group">
                     <label>Time (minute)</label>
-                    <input type="number" class="form-control" name="time" min="1" value="30" required readonly>
+                    <input type="number" id="break_time" class="form-control" name="time" min="1" value="30" required readonly>
                   </div>
                 </div>
               </div>
@@ -1435,6 +1437,11 @@ include 'settings/header.php'
                 </div>`);
     }else{
       $('#team_meeting_box').html('');
+    }
+    if(break_type == 'lunch'){
+        $('#break_time').val(45);
+    }else{
+        $('#break_time').val(30);
     }
   });
 

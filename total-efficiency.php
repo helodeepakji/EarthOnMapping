@@ -46,6 +46,15 @@ include 'settings/header.php'
     hr {
         margin: 0;
     }
+    li {
+        list-style: decimal;
+        margin-bottom: 5px; 
+    }
+    .block.taskdata {
+        height: 400px;
+        overflow: auto;
+    }
+
 </style>
 <main style="margin-top: 100px;">
     <div class="container ">
@@ -201,6 +210,14 @@ include 'settings/header.php'
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-12">
+                                <div class="tex"><h4 id="total_active_time">Token Active Time : </h4></div>
+                                <div class="tex"><h4 id="total_working_time">Total Task Time : </h4></div>
+                                <div class="tex"><h4 id="total_worked_time">Total Taken Time : </h4></div>
+                                <div class="tex"><h4 id="total_remaning_time">Total Remaining Time : </h4></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -227,142 +244,91 @@ include 'settings/header.php'
         var method = $("#method").val();
         var product_id = $("#product_id").val();
         var task_id = $("#task_id").val();
-        if (user_id) {
-            if (method == 'today' || method == 'monthly') {
-                $('#myTable_wrapper').css("display", "none");
-                $('.dataView').css("display", "block");
-                $.ajax({
-                    url: 'settings/api/efficiencyAPi.php',
-                    data: {
-                        type: 'getMonthEfficiency',
-                        user_id: user_id,
-                        method: method,
-                        product_id: product_id,
-                        task_id: task_id
-                    },
-                    dataType: 'json',
-                    success: function (response) {
+        if (method == 'today' || method == 'monthly') {
+            Notiflix.Loading.standard();
+            $('#myTable_wrapper').css("display", "none");
+            $('.dataView').css("display", "block");
+            $.ajax({
+                url: 'settings/api/efficiencyAPi.php',
+                data: {
+                    type: 'getMonthEfficiency',
+                    user_id: user_id,
+                    method: method,
+                    product_id: product_id,
+                    task_id: task_id
+                },
+                dataType: 'json',
+                success: function (response) {
+                    Notiflix.Loading.remove();
+                    $('#prodata').html('');
+                    $('#qcdata').html('');
+                    $('#qadata').html('');
+                    $('#vectordata').html('');
 
-                        $('#prodata').html('');
-                        $('#qcdata').html('');
-                        $('#qadata').html('');
-                        $('#vectordata').html('');
+                    $('#total_working_time').text('Total Task Time :  '+(response.total_working_time).toFixed(2) + ' hr.');
+                    $('#total_worked_time').text('Total Taken Time :  '+(response.total_worked_time).toFixed(2) + ' hr.');
+                    $('#total_active_time').text('Token Active Time : '+(response.active_time).toFixed(2) + ' hr.');
+                    $('#total_remaning_time').text('Total Remaining Time : '+(response.active_time - response.total_worked_time).toFixed(2)  + ' hr.');
 
-                        console.log(response);
-                        var pro = response.employee;
-                        var qa = response.qa;
-                        var qc = response.qc;
-                        var vector = response.vector;
-                        var temp = 0;
-                        var count = 0;
-                        pro.forEach(element => {
-                            $('#prodata').append(`<li> ${element.task_id} </li>`);
-                            temp += parseFloat(element.efficiency);
-                            count++;
-                        });
-                        $('.totalprodata .efficiency').text((temp/count).toFixed(2));
-                        $('.totalprodata .taken_time').text(((response.totalTime.totalEmployeeTime / (temp/count))*100).toFixed(2) + ' hr');
+                    console.log(response);
+                    var pro = response.employee;
+                    var qa = response.qa;
+                    var qc = response.qc;
+                    var vector = response.vector;
+                    pro.forEach(element => {
+                        $('#prodata').append(`<li> ${element.task_id} </li>`);
+                    });
+                    // $('.totalprodata .efficiency').text((temp/count).toFixed(2));
+                    $('.totalprodata .efficiency').text(((response.totalTime.totalEmployeeTime/response.totalTakenTime.totalEmployeeTime)*100).toFixed(2));
+                    
 
-                        temp = 0;
-                        count = 0;
-                        qa.forEach(element => {
-                            $('#qadata').append(`<li> ${element.task_id} </li>`);
-                            temp += parseFloat(element.efficiency);
-                            count++;
-                        });
-                        $('.totalqadata .efficiency').text((temp/count).toFixed(2));
-                        $('.totalqadata .taken_time').text(((response.totalTime.totalQaTime / (temp/count))*100).toFixed(2) + ' hr');
+                    qa.forEach(element => {
+                        $('#qadata').append(`<li> ${element.task_id} </li>`);
+                    });
+                    // $('.totalqadata .efficiency').text((temp/count).toFixed(2));
+                    $('.totalqadata .efficiency').text(((response.totalTime.totalQaTime/response.totalTakenTime.totalQaTime)*100).toFixed(2));
 
-                        temp = 0;
-                        count = 0;
-                        qc.forEach(element => {
-                            $('#qcdata').append(`<li> ${element.task_id} </li>`);
-                            temp += parseFloat(element.efficiency);
-                            count++;
-                        });
-                        $('.totalqcdata .efficiency').text((temp/count).toFixed(2));
-                        $('.totalqcdata .taken_time').text(((response.totalTime.totalQcTime / (temp/count))*100).toFixed(2) + ' hr');
+                    qc.forEach(element => {
+                        $('#qcdata').append(`<li> ${element.task_id} </li>`);
+                    });
+                    // $('.totalqcdata .efficiency').text((temp/count).toFixed(2));
+                    $('.totalqcdata .efficiency').text(((response.totalTime.totalQcTime/response.totalTakenTime.totalQcTime)*100).toFixed(2));
+                    
+                    vector.forEach(element => {
+                        $('#vectordata').append(`<li> ${element.task_id} </li>`);
+                    });
 
-                        temp = 0;
-                        count = 0;
-                        vector.forEach(element => {
-                            $('#vectordata').append(`<li> ${element.task_id} </li>`);
-                            temp += parseFloat(element.efficiency);
-                            count++;
-                        });
-                        $('.totalvectordata .efficiency').text((temp/count).toFixed(2));
-                        $('.totalvectordata .taken_time').text(((response.totalTime.totalVectorTime / (temp/count))*100).toFixed(2) + ' hr');
+                    // $('.totalvectordata .efficiency').text((temp/count).toFixed(2));
+                    $('.totalvectordata .efficiency').text(((response.totalTime.totalVectorTime/response.totalTakenTime.totalVectorTime)*100).toFixed(2));
 
-                        $('#name').text(`${response.user.first_name} ${response.user.last_name}`);
-                        $('.totalprodata .area_sqkm').text(response.totalArea.totalEmployeeArea + ' sqkm');
-                        $('.totalqadata .area_sqkm').text(response.totalArea.totalQaArea + ' sqkm');
-                        $('.totalqcdata .area_sqkm').text(response.totalArea.totalQcArea + ' sqkm');
-                        $('.totalvectordata .area_sqkm').text(response.totalArea.totalVectorArea + ' sqkm');
-                        
-                        $('.totalprodata .total_time').text(response.totalTime.totalEmployeeTime + ' hr');
-                        $('.totalqadata .total_time').text(response.totalTime.totalQaTime + ' hr');
-                        $('.totalqcdata .total_time').text(response.totalTime.totalQcTime + ' hr');
-                        $('.totalvectordata .total_time').text(response.totalTime.totalVectorTime + ' hr');
+                    $('.totalprodata .taken_time').text((response.totalTakenTime.totalEmployeeTime).toFixed(2) + ' hr');
+                    $('.totalqadata .taken_time').text((response.totalTakenTime.totalQaTime).toFixed(2) + ' hr');
+                    $('.totalqcdata .taken_time').text((response.totalTakenTime.totalQcTime).toFixed(2) + ' hr');
+                    $('.totalvectordata .taken_time').text((response.totalTakenTime.totalVectorTime).toFixed(2) + ' hr');
+
+                    $('#name').text(`${response.user.first_name} ${response.user.last_name}`);
+                    $('.totalprodata .area_sqkm').text(response.totalArea.totalEmployeeArea ?? 0 + ' sqkm');
+                    $('.totalqadata .area_sqkm').text(response.totalArea.totalQaArea ?? 0 + ' sqkm');
+                    $('.totalqcdata .area_sqkm').text(response.totalArea.totalQcArea ?? 0 + ' sqkm');
+                    $('.totalvectordata .area_sqkm').text(response.totalArea.totalVectorArea ?? 0 + ' sqkm');
+                    
+                    $('.totalprodata .total_time').text((response.totalTime.totalEmployeeTime).toFixed(2) + ' hr');
+                    $('.totalqadata .total_time').text((response.totalTime.totalQaTime).toFixed(2) + ' hr');
+                    $('.totalqcdata .total_time').text((response.totalTime.totalQcTime).toFixed(2) + ' hr');
+                    $('.totalvectordata .total_time').text((response.totalTime.totalVectorTime).toFixed(2) + ' hr');
                         
   
-                    }
-                });
-            } else {
-                $('.dataView').css("display", "none");
-                $('#myTable_wrapper').css("display", "block");
-                $.ajax({
-                    url: 'settings/api/efficiencyAPi.php',
-                    data: {
-                        type: 'getProjectEfficiency',
-                        user_id: user_id,
-                        method: method,
-                        product_id: product_id,
-                        task_id: task_id
-                    },
-                    dataType: 'json',
-                    success: function (response) {
-                        console.log(response);
-                        var table = $('#myTable').DataTable();
-                        table.clear().draw();
-                        response.forEach(element => {
-                            var efficiency = 0;
-                            if (element.efficiency > 100) {
-                                efficiency = 100;
-                            } else {
-                                efficiency = element.efficiency;
-                            }
-
-                            if (efficiency > 50) {
-                                var progress = `<div class="progress" role="progressbar" aria-label="Success  striped example" aria-valuenow="${element.efficiency}" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar progress-bar-striped  bg-success" style="width: ${element.efficiency}%">${element.efficiency}%</div></div>`;
-                            } else {
-                                var progress = `<div class="progress" role="progressbar" aria-label="Danger   striped example" aria-valuenow="${element.efficiency}" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar progress-bar-striped  bg-danger " style="width: ${element.efficiency}%">${element.efficiency}%</div></div>`;
-                            }
-
-                            var rowData = [
-                                element.first_name + ' ' + element.last_name,
-                                element.task_name + 'sqkm' + ' (#' + element.task_id + ')',
-                                element.project_name + ' (#' + element.project_id + ')',
-                                element.profile,
-                                progress,
-                                '<a href="view-efficiency.php?task_id=' + element.task_id + '"><i class="fas fa-eye"></i> view</a>'
-                            ];
-                            table.row.add(rowData).draw();
-                        });
-                    }
-                });
-            }
+                },
+                error: function(xhr, status, error) {
+                    Notiflix.Loading.remove();
+                    var errorMessage = xhr.responseJSON ? xhr.responseJSON.message : "Something went wrong.";
+                    notyf.error(errorMessage);
+                }
+            });
         } else {
-            notyf.error("Select User First.");
-        }
-
-    });
-
-    $('#download-btn').click(() => {
-        var user_id = $("#user_id").val();
-        var method = $("#method").val();
-        var product_id = $("#product_id").val();
-        var task_id = $("#task_id").val();
-        if (user_id) {
+            $('.dataView').css("display", "none");
+            $('#myTable_wrapper').css("display", "block");
+            Notiflix.Loading.standard();
             $.ajax({
                 url: 'settings/api/efficiencyAPi.php',
                 data: {
@@ -374,36 +340,83 @@ include 'settings/header.php'
                 },
                 dataType: 'json',
                 success: function (response) {
-                    const extractedDataArray = [];
-                    const extractedData = {
-                        "first_name": "First Name",
-                        "last_name": "Last Name",
-                        "task_id": "Task Id",
-                        "area_sqkm": "Area Sqkm",
-                        "project_id": "Project Id",
-                        "project_name": "Project Name",
-                        "total_efficiency": "Total Efficiency"
-                    };
-                    extractedDataArray.push(extractedData);
+                    Notiflix.Loading.remove();
                     console.log(response);
-                    for (const data of response) {
-                        const extractedData = {
-                            "first_name": data.first_name,
-                            "last_name": data.last_name,
-                            "task_id": data.task_id,
-                            "area_sqkm": data.task_name,
-                            "project_id": data.project_id,
-                            "project_name": data.project_name,
-                            "total_efficiency": data.efficiency
-                        };
-                        extractedDataArray.push(extractedData);
-                    }
-                    downloadExcel(extractedDataArray);
+                    var table = $('#myTable').DataTable();
+                    table.clear().draw();
+                    response.forEach(element => {
+                        var efficiency = 0;
+                        if (element.efficiency > 100) {
+                            efficiency = 100;
+                        } else {
+                            efficiency = element.efficiency;
+                        }
+
+                        if (efficiency > 50) {
+                            var progress = `<div class="progress" role="progressbar" aria-label="Success  striped example" aria-valuenow="${element.efficiency}" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar progress-bar-striped  bg-success" style="width: ${element.efficiency}%">${element.efficiency}%</div></div>`;
+                        } else {
+                            var progress = `<div class="progress" role="progressbar" aria-label="Danger   striped example" aria-valuenow="${element.efficiency}" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar progress-bar-striped  bg-danger " style="width: ${element.efficiency}%">${element.efficiency}%</div></div>`;
+                        }
+
+                        var rowData = [
+                            element.first_name + ' ' + element.last_name,
+                            element.task_name + 'sqkm' + ' (#' + element.task_id + ')',
+                            element.project_name + ' (#' + element.project_id + ')',
+                            element.profile,
+                            progress,
+                            '<a href="view-efficiency.php?task_id=' + element.task_id + '"><i class="fas fa-eye"></i> view</a>'
+                        ];
+                        table.row.add(rowData).draw();
+                    });
                 }
             });
-        } else {
-            notyf.error("Select User First.");
         }
+    });
+
+    $('#download-btn').click(() => {
+        var user_id = $("#user_id").val();
+        var method = $("#method").val();
+        var product_id = $("#product_id").val();
+        var task_id = $("#task_id").val();
+        $.ajax({
+            url: 'settings/api/efficiencyAPi.php',
+            data: {
+                type: 'getProjectEfficiency',
+                user_id: user_id,
+                method: method,
+                product_id: product_id,
+                task_id: task_id
+            },
+            dataType: 'json',
+            success: function (response) {
+                const extractedDataArray = [];
+                const extractedData = {
+                    "first_name": "First Name",
+                    "last_name": "Last Name",
+                    "task_id": "Task Id",
+                    "area_sqkm": "Area Sqkm",
+                    "project_id": "Project Id",
+                    "project_name": "Project Name",
+                    "total_efficiency": "Total Efficiency"
+                };
+                extractedDataArray.push(extractedData);
+                console.log(response);
+                for (const data of response) {
+                    const extractedData = {
+                        "first_name": data.first_name,
+                        "last_name": data.last_name,
+                        "task_id": data.task_id,
+                        "area_sqkm": data.task_name,
+                        "project_id": data.project_id,
+                        "project_name": data.project_name,
+                        "total_efficiency": data.efficiency
+                    };
+                    extractedDataArray.push(extractedData);
+                }
+                // console.log(extractedDataArray);
+                downloadExcel(extractedDataArray);
+            }
+        });
     });
 
     $('#method').change(() => {
