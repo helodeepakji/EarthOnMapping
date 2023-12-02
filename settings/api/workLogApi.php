@@ -39,6 +39,9 @@ function qaEfficiencyAdd($conn ,$user_id , $task_id , $project_id, $type){
             $calcute->execute([$task_id , $project_id ,$check_assign['id']]);
             $calcute = $calcute->fetchAll(PDO::FETCH_ASSOC);
 
+            $total_percentage = 0;
+            $total_hours = 0;
+            $total_minutes = 0;
             foreach ($calcute as $entry) {
                 if($entry['change_type']){
                     break;
@@ -125,7 +128,9 @@ function qcEfficiencyAdd($conn ,$user_id , $task_id , $project_id, $type){
             $calcute = $conn->prepare("SELECT * FROM `work_log` WHERE `task_id` = ? AND `prev_status` = 'qc_in_progress' AND `project_id` = ? AND  `id` > ?");
             $calcute->execute([$task_id , $project_id ,$check_assign['id']]);
             $calcute = $calcute->fetchAll(PDO::FETCH_ASSOC);
-
+            $total_percentage = 0;
+            $total_hours = 0;
+            $total_minutes = 0;
             foreach ($calcute as $entry) {
                 if($entry['change_type']){
                     break;
@@ -264,6 +269,9 @@ function efficiencyAdd($conn ,$user_id , $task_id , $project_id, $type){
             $calcute = $conn->prepare("SELECT * FROM `work_log` WHERE `task_id` = ? AND `project_id` = ? AND `id` < ?");
             $calcute->execute([$task_id , $project_id ,$check_assign['id']]);
             $calcute = $calcute->fetchAll(PDO::FETCH_ASSOC);
+            $total_percentage = 0;
+            $total_hours = 0;
+            $total_minutes = 0;
             foreach ($calcute as $entry) {
                 if($entry['change_type']){
                     break;
@@ -635,6 +643,11 @@ if (($_SERVER['REQUEST_METHOD'] == 'POST') && ($_POST['type'] == 'addPauseLogWor
     $result = $sql->execute([$user_id, $_POST['task_id'],$_POST['project_id'], $currentDate, $time, $_POST['status'], $next_status, $_POST['remarks'] , $_POST['work_percentage'] - $totalWorkPercentage['total_percentage'],$taken_time]);
 
     useBreak($conn,$user_id,$_POST['task_id']);
+
+    if($_POST['work_percentage'] < 100){
+        $sql = $conn->prepare('INSERT INTO `work_log`(`user_id`, `task_id`, `project_id`, `date`, `time`, `prev_status`, `next_status`, `remarks` , `work_percentage`,`taken_time`) VALUES (? , ? , ? , ? , ? , ?, ? , ? ,? , ?)');
+        $result = $sql->execute([$user_id, $_POST['task_id'],$_POST['project_id'], $currentDate, $time, $_POST['status'], 'Pause Work', $_POST['remarks'] , $_POST['work_percentage'] - $totalWorkPercentage['total_percentage'],'0H 0M']);
+    }
 
     if(($_POST['work_percentage'] == 100) && ($tasks['is_qc_failed'] == 0)){
          //  add eficincy in table

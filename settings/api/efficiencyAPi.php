@@ -49,6 +49,12 @@ function getMonthlyClock($user_id, $conn , $type){
     return $hours;
 }
 
+function convertTimeToHours($timeString) {
+    list($hours, $minutes) = sscanf($timeString, "%dH %dM");
+    $totalHours = $hours + $minutes / 60;
+    return $totalHours;
+}
+
 if (($_SERVER['REQUEST_METHOD'] == 'GET') && ($_GET['type'] == 'getTaskEfficiency')) {
     if ($_GET['user_id']) {
         $efficiency = $conn->prepare("SELECT * FROM `efficiency` WHERE `user_id` = ?");
@@ -123,9 +129,7 @@ if(($_SERVER['REQUEST_METHOD'] == 'GET') && ($_GET['type'] == 'getProjectEfficie
             $efficiency = $conn->prepare("SELECT * FROM `efficiency`");
             $efficiency->execute();
         }
-    }
-    
-    if($method == 'project'){
+    }else if($method == 'project'){
         if($_GET['user_id'] != ''){
             $efficiency = $conn->prepare("SELECT * FROM `efficiency` WHERE `project_id` = ? AND `user_id` = ?");
             $efficiency->execute([$_GET['product_id'],$_GET['user_id']]);
@@ -133,15 +137,27 @@ if(($_SERVER['REQUEST_METHOD'] == 'GET') && ($_GET['type'] == 'getProjectEfficie
             $efficiency = $conn->prepare("SELECT * FROM `efficiency` WHERE `project_id` = ?");
             $efficiency->execute([$_GET['product_id']]);
         }
-    }
-    
-    if($method == 'task'){
+    }else if($method == 'task'){
         if($_GET['user_id'] != ''){
             $efficiency = $conn->prepare("SELECT * FROM `efficiency` WHERE `task_id` = ? AND `user_id` = ?");
             $efficiency->execute([$_GET['task_id'],$_GET['user_id']]);
         }else{
             $efficiency = $conn->prepare("SELECT * FROM `efficiency` WHERE `task_id` = ?");
             $efficiency->execute([$_GET['task_id']]);
+        }
+    }else if($method == 'date'){
+        if($_GET['start_date'] != '' && $_GET['end_date'] != ''){
+            if($_GET['user_id'] != ''){
+                $efficiency = $conn->prepare("SELECT * FROM `efficiency` WHERE `created_at` BETWEEN ? AND ? AND `user_id` = ?");
+                $efficiency->execute([$_GET['start_date'],$_GET['end_date'],$_GET['user_id']]);
+            }else{
+                $efficiency = $conn->prepare("SELECT * FROM `efficiency` WHERE `created_at` BETWEEN ? AND ?");
+                $efficiency->execute([$_GET['start_date'],$_GET['end_date']]);
+            }
+        }else{
+            http_response_code(400);
+            echo json_encode(["message" => "Start & End is required"]);
+            exit;
         }
     }
 
@@ -168,7 +184,6 @@ if(($_SERVER['REQUEST_METHOD'] == 'GET') && ($_GET['type'] == 'getProjectEfficie
 
     http_response_code(200);
     echo json_encode($data);
-
 }
 
 if(($_SERVER['REQUEST_METHOD'] == 'GET') && ($_GET['type'] == 'getMonthEfficiency')){
@@ -210,6 +225,30 @@ if(($_SERVER['REQUEST_METHOD'] == 'GET') && ($_GET['type'] == 'getMonthEfficienc
             $project->execute([$value['project_id']]);
             $project = $project->fetch(PDO::FETCH_ASSOC);
 
+            // get in process
+
+            if($value['profile'] == 'employee'){
+                $prev_status = 'in_progress';
+            }else if($value['profile'] == 'qc'){
+                $prev_status = 'qc_in_progress';
+            }else if($value['profile'] == 'qa'){
+                $prev_status = 'qa_in_progress';
+            }else if($value['profile'] == 'vector'){
+                $prev_status = 'vector_in_progress';
+            }
+            
+
+            // start
+            $workTimes = $conn->prepare("SELECT * FROM `work_log` WHERE `user_id` = ? AND `prev_status` = ? AND `project_id` = ? AND `task_id` = ?  AND DATE(created_it) = CURDATE()");
+            $workTimes->execute([$_GET['user_id'] , $prev_status , $value['project_id'] , $value['task_id']]);
+            $workTimes = $workTimes->fetchAll(PDO::FETCH_ASSOC);
+            $tempPer = 0;
+            $tempTime = 0;
+            foreach ($workTimes as $workTime) {
+                $tempPer += $workTime['work_percentage'];
+                $tempTime += convertTimeToHours($workTime['taken_time']);
+            }
+            // end
 
 
             $value['task_name'] = $task['area_sqkm'];
@@ -217,16 +256,45 @@ if(($_SERVER['REQUEST_METHOD'] == 'GET') && ($_GET['type'] == 'getMonthEfficienc
 
             if($value['profile'] == 'employee'){
                 $task_estimated_hour = ($task['estimated_hour']) * (0.75);
-                $totalprotime += $task_estimated_hour;
+                if($tempPer != 0){
+                    $currTime = ($task_estimated_hour * $tempPer)/100;
+                    $totalprotime += $currTime;
+                }else{
+                    $totalprotime += $task_estimated_hour;
+                }
+                
                 $employee[] = $value;
                 $totalEmployeeArea += $task['area_sqkm'];
-                $protakentime += $task_estimated_hour / ($value['efficiency'] / 100);
+                if($value['efficiency'] / 100 <= 0){
+                    $protakentime += 0;
+                }else{
+                    if($tempTime != 0){
+                        $protakentime += $tempTime;
+                    }else{
+                        $protakentime += $task_estimated_hour / ($value['efficiency'] / 100);
+                    }
+                }
             }else if($value['profile'] == 'qc'){
                 $task_estimated_hour = ($task['estimated_hour']) * (0.20);
-                $totalqctime += $task_estimated_hour;
+                if($tempPer != 0){
+                    $currTime = ($task_estimated_hour * $tempPer)/100;
+                    $totalqctime += $currTime;
+                }else{
+                    $totalqctime += $task_estimated_hour;
+                }
+                
+                
                 $qc[] = $value;
                 $totalQcArea += $task['area_sqkm'];
-                $qctakentime += $task_estimated_hour / ($value['efficiency'] / 100);
+                if($value['efficiency'] / 100 <= 0){
+                    $qctakentime += 0;
+                }else{
+                    if($tempTime != 0){
+                        $qctakentime += $tempTime;
+                    }else{
+                        $qctakentime += $task_estimated_hour / ($value['efficiency'] / 100);
+                    }
+                }
             }else if($value['profile'] == 'qa'){
 
                 if($project['vector'] == 1){
@@ -234,21 +302,45 @@ if(($_SERVER['REQUEST_METHOD'] == 'GET') && ($_GET['type'] == 'getMonthEfficienc
                 }else{
                     $task_estimated_hour = ($task['estimated_hour']) * (0.05);
                 }
-                $totalqatime += $task_estimated_hour;
+                if($tempPer != 0){
+                    $currTime = ($task_estimated_hour * $tempPer)/100;
+                    $totalqatime += $currTime;
+                }else{
+                    $totalqatime += $task_estimated_hour;
+                }
                 $qa[] = $value;
                 $totalQaArea += $task['area_sqkm'];
-                $qatakentime += $task_estimated_hour / ($value['efficiency'] / 100);
+                if($value['efficiency'] / 100 <= 0){
+                    $qatakentime += 0;
+                }else{
+                    if($tempTime != 0){
+                        $qatakentime += $tempTime;
+                    }else{
+                        $qatakentime += $task_estimated_hour / ($value['efficiency'] / 100);
+                    }
+                }
             }else{
                 $task_estimated_hour = ($task['estimated_hour']) * (0.03);
-                $totalvectortime += $task_estimated_hour;
+                if($tempPer != 0){
+                    $currTime = ($task_estimated_hour * $tempPer)/100;
+                    $totalvectortime += $currTime;
+                }else{
+                    $totalvectortime += $task_estimated_hour;
+                }
                 $vector[] = $value;
                 $totalVectorArea += $task['area_sqkm'];
-                $vectortakentime += $task_estimated_hour / ($value['efficiency'] / 100);
+                if($value['efficiency'] / 100 <= 0){
+                    $vectortakentime += 0;
+                }else{
+                    if($tempTime != 0){
+                        $vectortakentime += $tempTime;
+                    }else{
+                        $vectortakentime += $task_estimated_hour / ($value['efficiency'] / 100);
+                    }
+                }
             }
         }
-    }
-    
-    if($method == 'monthly'){
+    }else if($method == 'monthly'){
         $efficiency = $conn->prepare("SELECT * FROM `efficiency` WHERE `user_id` = ? AND created_at >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
         AND created_at <= NOW()");
         $efficiency->execute([$_GET['user_id']]);
@@ -286,13 +378,21 @@ if(($_SERVER['REQUEST_METHOD'] == 'GET') && ($_GET['type'] == 'getMonthEfficienc
                 $totalprotime += $task_estimated_hour;
                 $employee[] = $value;
                 $totalEmployeeArea += $task['area_sqkm'];
-                $protakentime += $task_estimated_hour / ($value['efficiency'] / 100);
+                if($value['efficiency'] / 100 <= 0){
+                    $protakentime += 0;
+                }else{
+                    $protakentime += $task_estimated_hour / ($value['efficiency'] / 100);
+                }
             }else if($value['profile'] == 'qc'){
                 $task_estimated_hour = ($task['estimated_hour']) * (0.20);
                 $totalqctime += $task_estimated_hour;
                 $qc[] = $value;
                 $totalQcArea += $task['area_sqkm'];
-                $qctakentime += $task_estimated_hour / ($value['efficiency'] / 100);
+                if($value['efficiency'] / 100 <= 0){
+                    $qctakentime += 0;
+                }else{
+                    $qctakentime += $task_estimated_hour / ($value['efficiency'] / 100);
+                }
             }else if($value['profile'] == 'qa'){
 
                 if($project['vector'] == 1){
@@ -303,13 +403,21 @@ if(($_SERVER['REQUEST_METHOD'] == 'GET') && ($_GET['type'] == 'getMonthEfficienc
                 $totalqatime += $task_estimated_hour;
                 $qa[] = $value;
                 $totalQaArea += $task['area_sqkm'];
-                $qatakentime += $task_estimated_hour / ($value['efficiency'] / 100);
+                if($value['efficiency'] / 100 <= 0){
+                    $qatakentime += 0;
+                }else{
+                    $qatakentime += $task_estimated_hour / ($value['efficiency'] / 100);
+                }
             }else{
                 $task_estimated_hour = ($task['estimated_hour']) * (0.03);
                 $totalvectortime += $task_estimated_hour;
                 $vector[] = $value;
                 $totalVectorArea += $task['area_sqkm'];
-                $vectortakentime += $task_estimated_hour / ($value['efficiency'] / 100);
+                if($value['efficiency'] / 100 <= 0){
+                    $vectortakentime += 0;
+                }else{
+                    $vectortakentime += $task_estimated_hour / ($value['efficiency'] / 100);
+                }
             }
         }
     }

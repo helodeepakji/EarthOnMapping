@@ -661,12 +661,24 @@ include 'settings/header.php'
             } else {
               ?>
               <?php
-              if ($_SESSION['userType'] != 'admin') {
+                if ($_SESSION['userType'] != 'admin') {
+                  $contionues = $conn->prepare("SELECT * FROM `work_log` WHERE `task_id` = ? AND `project_id` = ? AND `prev_status` = ? AND `next_status` = 'Pause Work' ORDER BY `work_log`.`id` DESC");
+                  $contionues->execute([$task_id,$project_id,$tasks['status']]);
+                  $contionues = $contionues->fetch(PDO::FETCH_ASSOC);
+                  if($contionues){
+                    $logbtnflg = 0;
+                  }else{
+                    $logbtnflg = 1;
+                  }
                 ?>
-                <button type="button" id="#logWorkModalBtn" class="btn bg-btn" data-bs-toggle="modal"
-                  data-bs-target="#logWorkModal" onclick="getLastLog()" style="background: #098a01;color: white;">Log Work</button>
-                <button type="button" id="#breakModal" class="btn bg-btn" data-bs-toggle="modal"
-                  data-bs-target="#breakModal" style="background: #c71b1b;color: white;">Break</button>
+                <?php if($logbtnflg == 1){ ?>
+                  <button type="button" id="#logWorkModalBtn" class="btn bg-btn" data-bs-toggle="modal"
+                    data-bs-target="#logWorkModal" onclick="getLastLog()" style="background: #098a01;color: white;">Log Work</button>
+                  <button type="button" id="#breakModal" class="btn bg-btn" data-bs-toggle="modal"
+                    data-bs-target="#breakModal" style="background: #c71b1b;color: white;">Break</button>
+                <?php }else{ ?>
+                  <button type="button" class="btn bg-btn" onclick="getContinueWork()" style="background: #098a01;color: white;">Continue Work</button>
+                <?php } ?>
                 <?php
               }
             }
@@ -1399,16 +1411,45 @@ include 'settings/header.php'
 
   function getLastLog(){
     var task_id = $('#task_id').val();
+    var project_id = $('#project_id').val();
     $.ajax({
       url: 'settings/api/otherApi.php',
       data: {
         type: 'getLastLog',
-        task_id: task_id
+        task_id: task_id,
+        project_id : project_id
       },
       success: function (response) {
         console.log(response);
         $('#log_hour').val(response.hour);
         $('#log_minute').val(response.minutes);
+      }
+    });
+  }
+  
+  function getContinueWork(){
+    var task_id = $('#task_id').val();
+    var project_id = $('#project_id').val();
+    var pause_id = '<?php echo $contionues['id'] ?>';
+    $.ajax({
+      url: 'settings/api/otherApi.php',
+      type : 'POST',
+      data: {
+        type: 'getContinueWork',
+        task_id: task_id,
+        project_id : project_id,
+        pause_id : pause_id
+      },
+      dataType : 'JSON',
+      success: function (response) {
+        notyf.success(response.message);
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      },
+      error: function (xhr, status, error) {
+        var errorMessage = xhr.responseJSON ? xhr.responseJSON.message : "Something went wrong.";
+        notyf.error(errorMessage);
       }
     });
   }

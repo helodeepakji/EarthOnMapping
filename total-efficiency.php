@@ -54,6 +54,11 @@ include 'settings/header.php'
         height: 400px;
         overflow: auto;
     }
+    #project_full_eff .box{
+        padding: 10px;
+        width: 20%;
+        box-shadow: 2px 2px 20px 0px;
+    }
 
 </style>
 <main style="margin-top: 100px;">
@@ -81,6 +86,7 @@ include 'settings/header.php'
                                 <option value="today">Today</option>
                                 <option value="monthly">Monthly</option>
                                 <option value="project">Project</option>
+                                <option value="date">Date</option>
                                 <option value="task">Task</option>
                             </select>
                         </div>
@@ -103,12 +109,49 @@ include 'settings/header.php'
                                     ?>
                                 </select>
                             </div>
+                            <div id="search_by_date" style="display:none;">
+                                <input type="date" class="form-control" name="start_date" id="search_start_date">
+                                <input type="date" class="form-control" name="end_date" id="search_end_date">
+                            </div>
                         </div>
                         <div class="col-lg-3" style="display: flex; align-items: center;justify-content: space-evenly;">
                             <button class="btn btn-primary" id="search-btn" style=" width: 40%;">Search</button>
                             <button class="btn btn-primary" id="download-btn" style=" width: 40%;">Download</button>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container ">
+        <div class="card flex-fill" id="project_full_eff" style="display:none">
+            <div class="card-header">
+            </div>
+            <div class="card-body d-flex justify-content-sm-between">
+                <div class="box">
+                    <p>PRO Taken: <span class="pro_eff"></span> hr.</p>
+                    <p>PRO Total: <span class="pro_eff_total"></span> hr.</p>
+                    <p>PRO Effi.: <span class="pro_eff_cal"></span>%</p>
+                </div>
+                <div class="box">
+                    <p>QC Taken: <span class="qc_eff"></span> hr.</p>
+                    <p>QC Total: <span class="qc_eff_total"></span> hr.</p>
+                    <p>QC Effi.: <span class="qc_eff_cal"></span>%</p>
+                </div>
+                <div class="box">
+                    <p>QA Taken: <span class="qa_eff"></span> hr.</p>
+                    <p>QA Total: <span class="qa_eff_total"></span> hr.</p>
+                    <p>QA Effi.: <span class="qa_eff_cal"></span>%</p>
+                </div>
+                <div class="box">
+                    <p>Vector Taken: <span class="vector_eff"></span> hr.</p>
+                    <p>Vector Total: <span class="vector_eff_total"></span> hr.</p>
+                    <p>Vector Effi.: <span class="vector_eff_cal"></span>%</p>
+                </div>
+                <div class="box">
+                    <p>Taken : <span class="total_eff"></span> hr.</p>
+                    <p>Total: <span class="total_eff_total"></span> hr.</p>
+                    <p>Efficiency : <span class="total_eff_cal"></span>%</p>
                 </div>
             </div>
         </div>
@@ -238,11 +281,51 @@ include 'settings/header.php'
     $(".select2-selection--single").css("border", "0");
     $('#myTable').DataTable();
 
+    function getFullProjectEfficiency(project_id , task_id , user_id , start_date , end_date){
+        $.ajax({
+            url: 'settings/api/projectEfficiencyApi.php',
+            data: {
+                type: 'getFullProjectEfficiency',
+                project_id: project_id,
+                task_id : task_id ,
+                user_id : user_id,
+                start_date : start_date,
+                end_date :end_date
+            },
+            dataType: 'json',
+            success: function (response) {
+                var total_eff = response.totalTakenTime.totalEmployeeTime + response.totalTakenTime.totalQcTime + response.totalTakenTime.totalQaTime + response.totalTakenTime.totalVectorTime;
+                var total_eff_total = response.totalTime.totalEmployeeTime + response.totalTime.totalQcTime + response.totalTime.totalQaTime + response.totalTime.totalVectorTime;
+
+                $('#project_full_eff .pro_eff').text((response.totalTakenTime.totalEmployeeTime).toFixed(2));
+                $('#project_full_eff .qc_eff').text((response.totalTakenTime.totalQcTime).toFixed(2));
+                $('#project_full_eff .qa_eff').text((response.totalTakenTime.totalQaTime).toFixed(2));
+                $('#project_full_eff .vector_eff').text((response.totalTakenTime.totalVectorTime).toFixed(2));
+                $('#project_full_eff .total_eff').text((total_eff).toFixed(2));
+
+                $('#project_full_eff .pro_eff_total').text((response.totalTime.totalEmployeeTime).toFixed(2));
+                $('#project_full_eff .qc_eff_total').text((response.totalTime.totalQcTime).toFixed(2));
+                $('#project_full_eff .qa_eff_total').text((response.totalTime.totalQaTime).toFixed(2));
+                $('#project_full_eff .vector_eff_total').text((response.totalTime.totalVectorTime).toFixed(2));
+                $('#project_full_eff .total_eff_total').text((total_eff_total).toFixed(2));
+                
+                $('#project_full_eff .pro_eff_cal').text(((response.totalTime.totalEmployeeTime / response.totalTakenTime.totalEmployeeTime) * 100).toFixed(2));
+                $('#project_full_eff .qc_eff_cal').text(((response.totalTime.totalQcTime / response.totalTakenTime.totalQcTime) * 100).toFixed(2));
+                $('#project_full_eff .qa_eff_cal').text(((response.totalTime.totalQaTime/response.totalTakenTime.totalQaTime)*100).toFixed(2));
+                $('#project_full_eff .vector_eff_cal').text(((response.totalTime.totalVectorTime / response.totalTakenTime.totalVectorTime) * 100).toFixed(2));
+                $('#project_full_eff .total_eff_cal').text(((total_eff_total /  total_eff)*100).toFixed(2));
+            }
+        });
+    }
+
 
     $("#search-btn").click(() => {
+        $('#project_full_eff').css('display','none');
         var user_id = $("#user_id").val();
         var method = $("#method").val();
         var product_id = $("#product_id").val();
+        var start_date = $('#search_start_date').val();
+        var end_date = $('#search_end_date').val();
         var task_id = $("#task_id").val();
         if (method == 'today' || method == 'monthly') {
             Notiflix.Loading.standard();
@@ -317,6 +400,7 @@ include 'settings/header.php'
                     $('.totalqcdata .total_time').text((response.totalTime.totalQcTime).toFixed(2) + ' hr');
                     $('.totalvectordata .total_time').text((response.totalTime.totalVectorTime).toFixed(2) + ' hr');
                         
+                    Notiflix.Loading.remove();
   
                 },
                 error: function(xhr, status, error) {
@@ -325,7 +409,7 @@ include 'settings/header.php'
                     notyf.error(errorMessage);
                 }
             });
-        } else {
+        }else {
             $('.dataView').css("display", "none");
             $('#myTable_wrapper').css("display", "block");
             Notiflix.Loading.standard();
@@ -335,12 +419,13 @@ include 'settings/header.php'
                     type: 'getProjectEfficiency',
                     user_id: user_id,
                     method: method,
+                    start_date :start_date,
+                    end_date : end_date,
                     product_id: product_id,
                     task_id: task_id
                 },
                 dataType: 'json',
                 success: function (response) {
-                    Notiflix.Loading.remove();
                     console.log(response);
                     var table = $('#myTable').DataTable();
                     table.clear().draw();
@@ -368,6 +453,39 @@ include 'settings/header.php'
                         ];
                         table.row.add(rowData).draw();
                     });
+                    if(product_id || task_id || start_date || end_date){
+                        if(method == 'project'){
+                            $('#project_full_eff').css('display','block');
+                            if(user_id != ''){
+                                getFullProjectEfficiency(product_id , '' , user_id,'','')
+                            }else{
+                                getFullProjectEfficiency(product_id , '' , '','','');
+                            }
+                        }else if(method == 'task'){
+                            $('#project_full_eff').css('display','block');
+                            if(user_id != ''){
+                                getFullProjectEfficiency('' , task_id , user_id,'','')
+                            }else{
+                                getFullProjectEfficiency('' , task_id, '','','');
+                            }
+                        }else if(method == 'date'){
+                            console.log('date');
+                            $('#project_full_eff').css('display','block');
+                            if(user_id != ''){
+                                getFullProjectEfficiency('' , '' , user_id,start_date , end_date);
+                            }else{
+                                getFullProjectEfficiency('' , '', '',start_date,end_date);
+                            }
+                        }
+                    }else{
+                        $('#project_full_eff').css('display','none');
+                    }
+                    Notiflix.Loading.remove();
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.responseJSON ? xhr.responseJSON.message : "Something went wrong.";
+                    notyf.error(errorMessage);
+                    Notiflix.Loading.remove();
                 }
             });
         }
@@ -376,6 +494,8 @@ include 'settings/header.php'
     $('#download-btn').click(() => {
         var user_id = $("#user_id").val();
         var method = $("#method").val();
+        var start_date = $('#search_start_date').val();
+        var end_date = $("#search_end_date").val();
         var product_id = $("#product_id").val();
         var task_id = $("#task_id").val();
         $.ajax({
@@ -385,7 +505,9 @@ include 'settings/header.php'
                 user_id: user_id,
                 method: method,
                 product_id: product_id,
-                task_id: task_id
+                task_id: task_id,
+                end_date : end_date,
+                start_date:start_date
             },
             dataType: 'json',
             success: function (response) {
@@ -424,16 +546,25 @@ include 'settings/header.php'
         if (method == 'all' || method == 'today' || method == 'monthly') {
             $('#product_id').css('display', 'none');
             $('#msg_task_id').css('display', 'none');
+            $('#search_by_date').css('display', 'none');
         }
 
         if (method == 'project') {
             $('#product_id').css('display', 'block');
             $('#msg_task_id').css('display', 'none');
+            $('#search_by_date').css('display', 'none');
         }
 
         if (method == 'task') {
             $('#msg_task_id').css('display', 'block');
             $('#product_id').css('display', 'none');
+            $('#search_by_date').css('display', 'none');
+        }
+        
+        if (method == 'date') {
+            $('#msg_task_id').css('display', 'none');
+            $('#product_id').css('display', 'none');
+            $('#search_by_date').css('display', 'flex');
         }
     });
 
